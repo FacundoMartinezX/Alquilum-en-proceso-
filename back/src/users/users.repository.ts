@@ -1,22 +1,24 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "./entities/user.entity";
+import { Repository } from "typeorm";
 
 @Injectable()
 
 export class UserRepository {
 
-    private users = [
-        { id: 'a', name: 'User One', email: 'user1@example.com' },
-        { id: 'b', name: 'User Two', email: 'user2@example.com' },
-      ]
+  constructor( @InjectRepository(User) private readonly userRepository: Repository<User>) {
+
+  }
 
     getUsersRepository() {
-        return this.users;
+        return this.userRepository.find();
     }
 
     getUserByIdRepository(userId: string) {
-        const user = this.users.find( us => us.id === userId)
+        const user = this.userRepository.findOneBy({id: userId})
 
-        if(!user) return 'user not found'
+        if(!user) return new NotFoundException('user not found')
 
         return user;
 

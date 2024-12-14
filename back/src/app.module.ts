@@ -4,14 +4,25 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReserveModule } from './reserve/reserve.module';
 import { SpaceWorkModule } from './space-work/space-work.module';
-import { PaymentsController } from './payments/payments.controller';
-import { PaymentsService } from './payments/payments.service';
 import { PaymentsModule } from './payments/payments.module';
 import { AuthModule } from './auth/auth.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './config/typeorm';
+import { DisponibilityModule } from './disponibility/disponibility.module';
 
 @Module({
-  imports: [UsersModule, ReserveModule, SpaceWorkModule, PaymentsModule, AuthModule],
-  controllers: [AppController, PaymentsController],
-  providers: [AppService, PaymentsService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }), 
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: typeOrmConfig
+    }),
+    UsersModule, ReserveModule, SpaceWorkModule, PaymentsModule, AuthModule, ReviewsModule, DisponibilityModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
