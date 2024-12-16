@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { SpaceWorkService } from './space-work.service';
+import { CreateSpaceDto } from './dto/space-work.dto';
 
 @Controller('spaceWork')
 export class SpaceWorkController {
@@ -17,12 +18,12 @@ getSpaceWorkByIdController(@Param('id') id:string) {
 }
 
 @Post()
-creatSpaceWorkController(@Body() spaceWork: any) {
+creatSpaceWorkController(@Body() spaceWork: CreateSpaceDto) {
     return this.spaceWorkService.createSpaceWorkService(spaceWork)
 }
 
 @Put(':id')
-updateSpaceWorkController(@Param('id') id: string, @Body() spaceWork: any) {
+updateSpaceWorkController(@Param('id') id: string, @Body() spaceWork: CreateSpaceDto) {
 
     return this.spaceWorkService.updateSpaceWorkService(id, spaceWork)
 }

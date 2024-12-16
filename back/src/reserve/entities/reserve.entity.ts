@@ -34,6 +34,8 @@ export class Reserve {
   @ManyToOne(() => SpaceWork, sw => sw.reservas)
   spaceWork: SpaceWork;
 
+  @ManyToOne(() => User, us => us.reservas)
+
   @Column({ default: true })
   isAvaiable: boolean;
 

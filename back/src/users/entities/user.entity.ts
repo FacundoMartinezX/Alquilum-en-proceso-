@@ -1,46 +1,37 @@
 import { Reserve } from 'src/reserve/entities/reserve.entity';
-import { Review } from 'src/reviews/entities/reviews.entity';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-
-export enum TipoUsuario {
-  INQUILINO = 'INQUILINO',
-  PROPIETARIO = 'PROPIETARIO',
-  ADMINISTRADOR = 'ADMINISTRADOR',
-}
+import { Review } from './reviews.entity';
 
 @Entity()
-export class User{
+export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  userId: string;
 
   @Column()
-  nombre: string;
+  name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true})
   email: string;
 
   @Column()
-  contraseña: string;
+  password: string;
+  
+  @Column()
+  address: string;
 
-  @Column({
-    type: 'enum',
-    enum: TipoUsuario,
-  })
-  tipoUsuario: TipoUsuario;
+  @Column({})
+  tipoUsuario: string;
 
   @Column()
-  fechaRegistro: Date;
+  phone: number;
 
-  @Column()
-  telefono: string;
-  
-  @OneToMany(() => Review, rev => rev.user)
-  review: Review[];
-  
-  @OneToMany(() => Reserve, res => res.inquilino)
+  @OneToMany(() => Review, (review) => review.user)
+  reviews: Review[];
+
+  @OneToMany(() => Reserve, (reserve) => reserve.inquilino)
   reservas: Reserve[];
-  
-  @OneToMany(() => SpaceWork, sw => sw.owner)
-  espaciosPublicados: SpaceWork;
+
+  @OneToMany(() => SpaceWork, (spaceWork) => spaceWork.owner)
+  spaceWork: SpaceWork[];
 }

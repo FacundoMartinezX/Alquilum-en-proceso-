@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateReviewDto } from './dtos/reviews.dto';
 import { ReviewsRepository } from './reviews.repository';
 
 @Injectable()
@@ -13,11 +14,11 @@ export class ReviewService {
     return this.reviewsRepository.getReviewByIdRepository(id);
   }
 
-  createReviewService(review: any) {
-    return this.reviewsRepository.createReviewRepository(review);
+  createReviewService(userId: string,review: CreateReviewDto) {
+    return this.reviewsRepository.createReviewRepository(userId, review);
   }
 
-  updateReviewService(id: string, review: any) {
+  updateReviewService(id: string, review: CreateReviewDto) {
     return this.reviewsRepository.updateReviewRepository(id, review);
   }
 

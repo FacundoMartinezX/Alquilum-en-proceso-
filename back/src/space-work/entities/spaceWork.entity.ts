@@ -1,6 +1,5 @@
-import { Disponibility } from "src/disponibility/entities/disponibility.entity";
 import { Reserve } from "src/reserve/entities/reserve.entity";
-import { Review } from "src/reviews/entities/reviews.entity";
+import { Review } from "src/users/entities/reviews.entity";
 import { User } from "src/users/entities/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -29,11 +28,8 @@ export class SpaceWork {
 
   @Column({ type: 'simple-array' })
   fotos: string[]; 
-
-  @OneToMany(() => Disponibility, dis => dis.spaceWork)
-  disponibility: Disponibility[]; 
-
-  @ManyToOne(() => User, user => user.espaciosPublicados)
+  
+  @ManyToOne(() => User, user => user.spaceWork)
   owner: User; 
 
   @OneToMany(() => Reserve, res => res.spaceWork)

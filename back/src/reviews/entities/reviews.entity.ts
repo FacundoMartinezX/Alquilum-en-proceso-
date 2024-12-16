@@ -13,7 +13,7 @@ export class Review {
   @Column({ type: 'int', width: 1 })
   calification: number; 
 
-  @ManyToOne(() => User, us => us.review)
+  @ManyToOne(() => User, us => us.reviews)
   user: string;
 
   @ManyToOne(() => SpaceWork, sw => sw.review)

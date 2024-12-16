@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
+import { SignUpDto } from "./dto/signUp.dto";
 
 @Injectable()
 
@@ -9,51 +10,79 @@ export class UserRepository {
 
   constructor( @InjectRepository(User) private readonly userRepository: Repository<User>) {
 
+}
+
+  async getUsersRepository() {
+    const users = await this.userRepository.find(); 
+
+    if (users.length === 0) {
+      throw new NotFoundException('users not found');
+    }
+  
+    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const usersWithoutPassword = users.map(({ password, ...userWithoutPassword }) => userWithoutPassword);
+  
+    return usersWithoutPassword; 
   }
 
-    getUsersRepository() {
-        return this.userRepository.find();
-    }
+  async getUserByIdRepository(userId: string) {
+    console.log('id: ', userId)
+    const user = await this.userRepository.findOne({
+      where: { userId },
+      relations: ['reviews', 'reservas', 'spaceWork']
+    });
 
-    getUserByIdRepository(userId: string) {
-        const user = this.userRepository.findOneBy({id: userId})
-
-        if(!user) return new NotFoundException('user not found')
+        if(!user) new NotFoundException('user not found')
 
         return user;
 
     }
 
-    createUserRepository(user: any) {
-      const newUser = {
-        id: this.users.length + 1,
-        ...user
+    async createUserRepository(user: SignUpDto) {
+
+      console.log('Received user:', user)
+      const existingUser = await this.userRepository.findOneBy({ email: user.email });
+    
+      if (existingUser) {
+        throw new BadRequestException('El usuario con este correo ya está registrado');
       }
 
-      this.users.push(newUser)
+
+      const newUser = this.userRepository.create(user);
+      const savedUser = await this.userRepository.save(newUser);
     
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...userWithoutPassword } = savedUser;
+      return userWithoutPassword;
     }
 
-    updateUserRepository(userId: string, user: any) {
-         const userI = this.users.findIndex(us => us.id === userId)
+    async updateUserRepository(userId: string, updateUser: SignUpDto) {
+         const { name, email, address, phone, tipoUsuario } = updateUser
 
-        if(userI === -1) {
-            return 'user not found'
+         await this.userRepository.update(userId,{name, email, address, phone, tipoUsuario})
+         const updatedUser = await this.userRepository.findOneBy({ userId });
+
+         if (updatedUser) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { password, ...userWithoutPassword } = updatedUser;
+          return userWithoutPassword;
         }
+      
+        throw new Error('Error updating user');
 
-         this.users[userI] = {...this.users[userI], ...user}
+    }
 
-         return 'modified user'
-     }
+    async deleteUserRepository(userId: string) {
 
-    deleteUserRepository(userId: string) {
+      const user = await this.userRepository.findOneBy({userId})
 
-      const userIndex = this.users.findIndex((user) => user.id === userId);
-      if (userIndex === -1) return { message: 'User not found' };
-  
-      this.users.splice(userIndex, 1);
+      if(!user) new NotFoundException('user not found')
 
-      return 'user deleted';
+      await this.userRepository.remove(user)
+
+      return 'successfully removed'
+
     }
 
     }

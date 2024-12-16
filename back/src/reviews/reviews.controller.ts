@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ReviewService } from './reviews.service';
+import { CreateReviewDto } from './dtos/reviews.dto';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -11,17 +12,17 @@ export class ReviewsController {
   }
 
   @Get(':id')
-  getReviewById(@Param('id') id: string) {
+  getReviewById(@Param('id') id: string) {  
     return this.reviewsService.getReviewByIdService(id);
   }
 
-  @Post()
-  createReview(@Body() review: any) {
-    return this.reviewsService.createReviewService(review);
+  @Post(':id')
+  createReview(@Param('id') userId: string, @Body() review: CreateReviewDto) {
+    return this.reviewsService.createReviewService(userId,review );
   }
 
   @Put(':id')
-  updateReview(@Param('id') id: string, @Body() review: any) {
+  updateReview(@Param('id') id: string, @Body() review: CreateReviewDto) {
     return this.reviewsService.updateReviewService(id, review);
   }
 

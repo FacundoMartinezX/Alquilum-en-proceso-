@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateReviewDto } from './dtos/reviews.dto';
 
 @Injectable()
 export class ReviewsRepository {
@@ -13,7 +14,7 @@ export class ReviewsRepository {
     return review || 'Review not found';
   }
 
-  createReviewRepository(review: any) {
+  createReviewRepository(userId: string, review: CreateReviewDto) {
     this.reviews.push(review);
     return 'Review created';
   }

@@ -1,73 +1,69 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { SpaceWork } from "./entities/spaceWork.entity";
+import { Repository } from "typeorm";
+import { CreateSpaceDto } from "./dto/space-work.dto";
 
 @Injectable()
 
 export class SpaceWorkRepository {
+   
+    constructor(@InjectRepository(SpaceWork) private readonly spaceWorkRepository: Repository<SpaceWork>) {}
 
-    spaceWorks = [
-        {
-            id: '1',
-            name: 'Coworking Central',
-            location: 'Buenos Aires, Argentina',
-            pricePerHour: 10,
-            description: 'Espacio moderno con internet de alta velocidad y sala de reuniones.',
-            capacity: 50,
-            amenities: ['Wi-Fi', 'Café gratis', 'Sala de reuniones', 'Estacionamiento'],
-        },
-        {
-            id: '2',
-            name: 'WorkSpot Palermo',
-            location: 'Palermo, Buenos Aires',
-            pricePerHour: 15,
-            description: 'Espacio premium con áreas de relajación y vistas increíbles.',
-            capacity: 30,
-            amenities: ['Wi-Fi', 'Área de relax', 'Terraza', 'Café gourmet'],
-        },
-        {
-            id: '3',
-            name: 'The Productivity Hub',
-            location: 'Córdoba, Argentina',
-            pricePerHour: 12,
-            description: 'Diseñado para la productividad, con cabinas privadas y escritorios compartidos.',
-            capacity: 40,
-            amenities: ['Wi-Fi', 'Cabinas privadas', 'Impresora', 'Zona de juegos'],
-        }]    
+        async getSpaceWorksRepository() {
+            const spacesWork =  await this.spaceWorkRepository.find();
 
-        getSpaceWorksRepository() {
-            return this.spaceWorks;
+            if (spacesWork.length === 0) {
+                throw new NotFoundException('No spaces work found');
+              }
+
+            return spacesWork;
         }
 
-        getSpaceWorkByIdRepository(id: string) {
-            const spaceWork = this.spaceWorks.find((sw) => sw.id === id);
+        async getSpaceWorkByIdRepository(id: string) {
+            const spaceWork = await this.spaceWorkRepository.findOne({
+                where: {id},
+                relations: ['disponibility', 'owner', 'reservas', 'review']
+            });
             if (!spaceWork) {
                 throw new NotFoundException('SpaceWork not found');
             }
             return spaceWork;
         }
 
-        createSpaceWorkRepository(spaceWork: any) {
-            const newSpaceWork = { id: Date.now().toString(), ...spaceWork };
-            this.spaceWorks.push(newSpaceWork);
-            return newSpaceWork;
+        async createSpaceWorkRepository(spaceWork: CreateSpaceDto) {
+
+
+            const newSpaceWork = this.spaceWorkRepository.create(spaceWork);
+            
+            const savedSpaceWork = await this.spaceWorkRepository.save(newSpaceWork);
+
+            return savedSpaceWork;
         }
 
-        updateSpaceWorkRepository(id: string, updateData: any) {
-            const index = this.spaceWorks.findIndex((sw) => sw.id === id);
-            if (index === -1) {
+        async updateSpaceWorkRepository(id: string, updateData: CreateSpaceDto) {
+
+            const {titulo, descripcion, ubicacion, precioPorDia, capacidad, servicios, fotos} = updateData;
+            
+            const spaceWork = await this.spaceWorkRepository.findOneBy({id})
+            
+            if (!spaceWork) {
                 throw new NotFoundException('SpaceWork not found');
+
             }
-            this.spaceWorks[index] = { ...this.spaceWorks[index], ...updateData };
-            return this.spaceWorks[index];
+
+            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion, precioPorDia, capacidad, servicios, fotos})
+            
+            return 'update successfully'
         }
     
         
-        deleteSpaceWorkRepository(id: string) {
-            const index = this.spaceWorks.findIndex((sw) => sw.id === id);
-            if (index === -1) {
-                throw new NotFoundException('SpaceWork not found');
-            }
-            const [deletedSpaceWork] = this.spaceWorks.splice(index, 1);
-            return deletedSpaceWork;
+        async deleteSpaceWorkRepository(id: string) {
+            const spaceWork = await this.spaceWorkRepository.findOneBy({id})
+            
+            await this.spaceWorkRepository.remove(spaceWork)
+
+            return 'removed successfully'
         }
 
     
