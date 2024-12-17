@@ -8,9 +8,7 @@ import { SignUpDto } from "./dto/signUp.dto";
 
 export class UserRepository {
 
-  constructor( @InjectRepository(User) private readonly userRepository: Repository<User>) {
-
-}
+  constructor( @InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async getUsersRepository() {
     const users = await this.userRepository.find(); 
@@ -41,7 +39,6 @@ export class UserRepository {
 
     async createUserRepository(user: SignUpDto) {
 
-      console.log('Received user:', user)
       const existingUser = await this.userRepository.findOneBy({ email: user.email });
     
       if (existingUser) {
@@ -50,7 +47,7 @@ export class UserRepository {
 
 
       const newUser = this.userRepository.create(user);
-      const savedUser = await this.userRepository.save(newUser);
+      const savedUser = await this.userRepository.save(newUser); 
     
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = savedUser;

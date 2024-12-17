@@ -1,21 +1,22 @@
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity('reviews')
+@Entity('')
 export class Review {
   @PrimaryGeneratedColumn('uuid')
-  id: string; 
+  id: string;
 
   @Column({ type: 'text' })
-  comentario: string; 
+  comentario: string;
 
-  @Column({ type: 'int', width: 1 })
-  calification: number; 
+  @Column({ type: 'int' })
+  calificacion: number;
 
-  @ManyToOne(() => User, us => us.reviews)
-  user: string;
-
-  @ManyToOne(() => SpaceWork, sw => sw.review)
+  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review)
   spaceWork: SpaceWork;
+
+  @ManyToOne(() => User, (user) => user.reviews)
+  @JoinColumn({name: 'userId'})
+  user: User;
 }

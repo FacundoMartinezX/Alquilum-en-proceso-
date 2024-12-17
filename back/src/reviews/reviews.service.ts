@@ -14,8 +14,8 @@ export class ReviewService {
     return this.reviewsRepository.getReviewByIdRepository(id);
   }
 
-  createReviewService(userId: string,review: CreateReviewDto) {
-    return this.reviewsRepository.createReviewRepository(userId, review);
+  createReviewService(review: CreateReviewDto) {
+    return this.reviewsRepository.createReviewRepository(review);
   }
 
   updateReviewService(id: string, review: CreateReviewDto) {

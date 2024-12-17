@@ -26,4 +26,12 @@ export class CreateReviewDto {
   @IsString()
   @IsNotEmpty()
   spaceWorkId: string;
+
+  @ApiProperty({
+    description: 'ID del creador de la reseña',
+    example: 'uuid-del-espacio',
+  })
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
 }

@@ -14,7 +14,7 @@ async function bootstrap() {
     }),
   );
 
-  // Escuchar en el puerto indicado en el entorno o 3000 por defecto
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 

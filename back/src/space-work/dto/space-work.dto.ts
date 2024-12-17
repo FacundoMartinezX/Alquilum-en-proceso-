@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray } from 'class-validator';
 
 export class CreateSpaceDto {
+
+ 
+
   @ApiProperty({
     description: 'Título del espacio',
     example: 'Departamento moderno en el centro',
@@ -56,4 +59,12 @@ export class CreateSpaceDto {
   @IsArray()
   @IsNotEmpty()
   fotos: string[];
+
+  @ApiProperty({
+    description: 'ID del creador del espacio',
+    example: 'fds56ds-5r5e65rdf-fddscs5d5d',
+  })
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
 }

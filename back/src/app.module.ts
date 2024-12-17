@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { typeOrmConfig } from './config/typeorm';
       inject: [ConfigService],
       useFactory: typeOrmConfig
     }),
-    UsersModule, ReserveModule, SpaceWorkModule, PaymentsModule, AuthModule],
+    UsersModule, ReserveModule, SpaceWorkModule, PaymentsModule, AuthModule, ReviewsModule],
   controllers: [AppController],
   providers: [AppService],
 })
