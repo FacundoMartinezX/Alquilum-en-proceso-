@@ -2,7 +2,7 @@ import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity('')
+@Entity()
 export class Review {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -43,9 +43,11 @@ export class ReviewsRepository {
     const spaceWork = await this.spaceWorkRepository.findOne({
       where: { id: review.spaceWorkId },
     });
+    
     if (!spaceWork) {
-      throw new NotFoundException('SpaceWork not found');
+      throw new Error('SpaceWork not found');
     }
+
 
     const newReview = this.reviewsRepository.create({
       comentario: review.comentario,
@@ -62,8 +64,7 @@ export class ReviewsRepository {
       select: {spaceWork: {id: true}, user: {userId: true}}
     })
 
-    return result;
-    
+    return result
   }
 
   async updateReviewRepository(userId: string, updatedReview: CreateReviewDto) {

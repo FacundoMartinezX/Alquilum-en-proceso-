@@ -36,6 +36,12 @@ export class SpaceWorkRepository {
                 select: {
                     owner: {
                         userId: true
+                    },
+                    review:{
+                        id: true
+                    },
+                    reservas: {
+                        id: true
                     }
                 }
             });
@@ -44,6 +50,7 @@ export class SpaceWorkRepository {
             }
             return spaceWork;
         }
+
 
         async createSpaceWorkRepository(spaceWork: CreateSpaceDto) {
 
@@ -81,10 +88,11 @@ export class SpaceWorkRepository {
             return result;
         }
 
+
         async updateSpaceWorkRepository(id: string, updateData: CreateSpaceDto) {
 
-            const {titulo, descripcion, ubicacion, precioPorDia, capacidad, servicios, fotos} = updateData;
-            
+            const {titulo, descripcion, ubicacion, capacidad, servicios, fotos} = updateData;
+
             const spaceWork = await this.spaceWorkRepository.findOneBy({id})
             
             if (!spaceWork) {
@@ -92,7 +100,7 @@ export class SpaceWorkRepository {
 
             }
 
-            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion, precioPorDia, capacidad, servicios, fotos})
+            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion , capacidad, servicios, fotos})
             
             return 'update successfully'
         }

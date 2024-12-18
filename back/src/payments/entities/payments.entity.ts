@@ -1,5 +1,4 @@
-import { Reserve } from "src/reserve/entities/reserve.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Payment {
@@ -17,7 +16,5 @@ export class Payment {
   
     @Column({ nullable: true })
     paymentMethod?: string; 
-  
-    @OneToOne(() => Reserve, re => re.isAvaiable)
-    reserve: Reserve;
+
 }

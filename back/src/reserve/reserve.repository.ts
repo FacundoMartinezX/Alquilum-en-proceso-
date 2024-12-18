@@ -1,8 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+// import { InjectRepository } from '@nestjs/typeorm';
+// import { Reserve } from './entities/reserve.entity';
+// import { Repository } from 'typeorm';
 
 @Injectable()
 export class ReserveRepository {
-    private reserves = [];
+
+    reserves = []
+    
+    // constructor(@InjectRepository(Reserve) private readonly  reserveRepository: Repository<Reserve>)
 
     getReservesRepository() {
         return this.reserves;
@@ -10,7 +16,7 @@ export class ReserveRepository {
 
     getReserveByIdRepository(id: string) {
         const reserve = this.reserves.find((r) => r.id === id);
-        if (!reserve) {
+        if (!reserve) { 
             throw new NotFoundException('Reserve not found');
         }
         return reserve;

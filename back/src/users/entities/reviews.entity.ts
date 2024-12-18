@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.entity';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity('reviews')
+@Entity('')
 export class Review {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -10,12 +10,13 @@ export class Review {
   @Column({ type: 'text' })
   comentario: string;
 
-  @Column({ type: 'int', width: 1, default: 5 })
+  @Column({ type: 'int' })
   calificacion: number;
 
-  @ManyToOne(() => User, (user) => user.reviews, { onDelete: 'CASCADE' })
-  user: User;
-
-  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review, { onDelete: 'CASCADE' })
+  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review)
   spaceWork: SpaceWork;
-}
+
+  @ManyToOne(() => User, (user) => user.reviews)
+  @JoinColumn({name: 'userId'})
+  user: User;
+} 
