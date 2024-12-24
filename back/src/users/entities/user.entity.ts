@@ -14,7 +14,7 @@ export class User {
   @Column({ unique: true})
   email: string;
 
-  @Column()
+  @Column({select: false})
   password: string;
   
   @Column()
@@ -29,7 +29,7 @@ export class User {
   @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
 
-  @OneToMany(() => Reserve, (reserve) => reserve.inquilino)
+  @OneToMany(() => Reserve, (reserve) => reserve.user)
   reservas: Reserve[];
 
   @OneToMany(() => SpaceWork, (spaceWork) => spaceWork.owner)

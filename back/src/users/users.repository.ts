@@ -18,10 +18,7 @@ export class UserRepository {
     }
   
     
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const usersWithoutPassword = users.map(({ password, ...userWithoutPassword }) => userWithoutPassword);
-  
-    return usersWithoutPassword; 
+    return users; 
   }
 
   async getUserByIdRepository(userId: string) {

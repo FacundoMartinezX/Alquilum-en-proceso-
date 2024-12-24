@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ReserveService } from './reserve.service';
+import { CreateReservationDto } from './dto/reserve.dto';
 
 @Controller('reserve')
 export class ReserveController {
@@ -16,17 +17,12 @@ export class ReserveController {
     }
 
     @Post()
-    createReserveController(@Body() reserve: any) {
+    createReserveController(@Body() reserve: CreateReservationDto) {
         return this.reserveService.createReserveService(reserve);
     }
 
-    @Put(':id')
-    updateReserveController(@Param('id') id: string, @Body() reserve: any) {
-        return this.reserveService.updateReserveService(id, reserve);
-    }
-
-    @Delete(':id')
-    deleteReserveController(@Param('id') id: string) {
-        return this.reserveService.deleteReserveService(id);
+    @Put('cancel/:id')
+    cancellReserveController(@Param('id') id: string) {
+        return this.reserveService.cancelReservationService(id);
     }
 }

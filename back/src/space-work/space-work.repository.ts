@@ -91,7 +91,7 @@ export class SpaceWorkRepository {
 
         async updateSpaceWorkRepository(id: string, updateData: CreateSpaceDto) {
 
-            const {titulo, descripcion, ubicacion, capacidad, servicios, fotos} = updateData;
+            const {titulo, descripcion, ubicacion,precioPorDia, capacidad, servicios, fotos} = updateData;
 
             const spaceWork = await this.spaceWorkRepository.findOneBy({id})
             
@@ -100,7 +100,7 @@ export class SpaceWorkRepository {
 
             }
 
-            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion , capacidad, servicios, fotos})
+            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion , precioPorDia, capacidad, servicios, fotos})
             
             return 'update successfully'
         }

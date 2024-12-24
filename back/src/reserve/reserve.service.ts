@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ReserveRepository } from './reserve.repository';
+import { CreateReservationDto } from './dto/reserve.dto';
 
 @Injectable()
 export class ReserveService {
@@ -13,15 +14,11 @@ export class ReserveService {
         return this.reserveRepository.getReserveByIdRepository(id);
     }
 
-    createReserveService(reserve: any) {
+    createReserveService(reserve: CreateReservationDto) {
         return this.reserveRepository.createReserveRepository(reserve);
     }
 
-    updateReserveService(id: string, reserve: any) {
-        return this.reserveRepository.updateReserveRepository(id, reserve);
-    }
-
-    deleteReserveService(id: string) {
-        return this.reserveRepository.deleteReserveRepository(id);
+    cancelReservationService(id: string) {
+        return this.reserveRepository.cancelReservationRepository(id);
     }
 }

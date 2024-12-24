@@ -28,6 +28,9 @@ export class SpaceWork {
 
   @Column({ type: 'simple-array' })
   fotos: string[]; 
+
+  @Column({ default: true })
+  isAvailable: boolean;
   
   @ManyToOne(() => User, user => user.spaceWork)
   owner: User; 
