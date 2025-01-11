@@ -14,7 +14,7 @@ export class User {
   @Column({ unique: true})
   email: string;
 
-  @Column({select: false})
+  @Column()
   password: string;
   
   @Column()
@@ -25,6 +25,9 @@ export class User {
 
   @Column()
   phone: number;
+
+  @Column({default: false})
+  isAdmin: boolean;
 
   @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
