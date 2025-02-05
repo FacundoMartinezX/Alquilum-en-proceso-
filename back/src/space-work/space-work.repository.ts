@@ -4,6 +4,7 @@ import { SpaceWork } from "./entities/spaceWork.entity";
 import { Repository } from "typeorm";
 import { CreateSpaceDto } from "./dto/space-work.dto";
 import { User } from "src/users/entities/user.entity";
+import { isUUID } from "class-validator";
 
 @Injectable()
 
@@ -30,6 +31,10 @@ export class SpaceWorkRepository {
         }
 
         async getSpaceWorkByIdRepository(id: string) {
+
+                if(!isUUID(id)) throw new BadRequestException('space work ID not valid')
+            
+
             const spaceWork = await this.spaceWorkRepository.findOne({
                 where: {id},
                 relations: [ 'owner', 'reservas', 'review'],
@@ -91,6 +96,9 @@ export class SpaceWorkRepository {
 
         async updateSpaceWorkRepository(id: string, updateData: CreateSpaceDto) {
 
+            if(!isUUID(id)) throw new BadRequestException('space work ID not valid')
+
+
             const {titulo, descripcion, ubicacion,precioPorDia, capacidad, servicios, fotos} = updateData;
 
             const spaceWork = await this.spaceWorkRepository.findOneBy({id})
@@ -107,6 +115,9 @@ export class SpaceWorkRepository {
     
         
         async deleteSpaceWorkRepository(id: string) {
+
+            if(!isUUID(id)) throw new BadRequestException('space work ID not valid')
+
             const spaceWork = await this.spaceWorkRepository.findOneBy({id})
             
             await this.spaceWorkRepository.remove(spaceWork)

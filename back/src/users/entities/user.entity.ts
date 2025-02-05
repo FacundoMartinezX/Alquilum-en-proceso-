@@ -20,7 +20,7 @@ export class User {
   @Column()
   address: string;
 
-  @Column({})
+  @Column({default: 'USER'})
   tipoUsuario: string;
 
   @Column()

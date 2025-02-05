@@ -38,6 +38,6 @@ export class SpaceWork {
   @OneToMany(() => Reserve, res => res.spaceWork)
   reservas: Reserve[]; 
 
-  @OneToMany(() => Review, rev => rev.spaceWork)
+  @OneToMany(() => Review, rev => rev.spaceWork, {onDelete: 'CASCADE'})
   review: Review[]; 
 }

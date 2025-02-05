@@ -13,6 +13,7 @@ export class AuthGuard implements CanActivate {
         const request = context.switchToHttp().getRequest()
         const token = this.extractTokenFromHeader(request)
 
+
         if(!token) throw new UnauthorizedException('Invalid token')
 
             try {
@@ -20,6 +21,8 @@ export class AuthGuard implements CanActivate {
                 const payload = this.jwtService.verify(token, { secret: secretKey });
                 payload.iat = new Date(payload.iat * 1000);
                 payload.exp = new Date(payload.exp * 1000);
+              
+
           
                 if (payload.isAdmin) {
                   payload.roles = ['admin'];
@@ -28,7 +31,7 @@ export class AuthGuard implements CanActivate {
                 }
           
                 request['user'] = payload;
-              } catch {
+              } catch { 
                 throw new UnauthorizedException();
               }
               return true;

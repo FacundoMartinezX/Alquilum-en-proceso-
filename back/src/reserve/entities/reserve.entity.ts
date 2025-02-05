@@ -20,7 +20,7 @@ export class Reserve {
   @Column({default: true})
   status: boolean;
 
-  @ManyToOne(() => SpaceWork, sw => sw.reservas)
+  @ManyToOne(() => SpaceWork, sw => sw.reservas, {cascade: true, onDelete: 'CASCADE'})
   spaceWork: SpaceWork;
 
   @ManyToOne(() => User, us => us.reservas)

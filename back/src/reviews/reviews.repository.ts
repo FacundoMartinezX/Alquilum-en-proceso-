@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReviewDto } from './dtos/reviews.dto';
 import { Review } from './entities/reviews.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { User } from 'src/users/entities/user.entity';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class ReviewsRepository {
@@ -25,6 +26,9 @@ export class ReviewsRepository {
   }
 
   getReviewByIdRepository(id: string) {
+
+    if(!isUUID(id)) throw new BadRequestException('User ID not valid')
+
     const review = this.reviewsRepository.findOne({
       where: {id},
       relations: ['user', 'spaceWork'],
@@ -69,6 +73,8 @@ export class ReviewsRepository {
 
   async updateReviewRepository(userId: string, updatedReview: CreateReviewDto) {
 
+    if(!isUUID(userId)) throw new BadRequestException('User ID not valid')
+
     const {comentario, calificacion, } = updatedReview;
 
     const user = await this.userRepository.findOneBy({userId: userId});
@@ -80,6 +86,9 @@ export class ReviewsRepository {
   }
 
   async deleteReviewRepository(id: string) {
+
+    if(!isUUID(id)) throw new BadRequestException('User ID not valid')
+      
     const  review = await this.reviewsRepository.findOneBy({id})
 
     if(!review) new NotFoundException('review not found')

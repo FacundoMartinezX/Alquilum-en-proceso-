@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateReservationDto } from './dto/reserve.dto';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { User } from 'src/users/entities/user.entity';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class ReserveRepository {
@@ -27,9 +28,17 @@ export class ReserveRepository {
     } 
 
     getReserveByIdRepository(id: string) {
+
+        if(!isUUID(id)) throw new BadRequestException('reserve ID not valid')
+        
+
         const reserve = this.reserveRepository.findOne({
             where: {id: id},
-            relations: ['spaceWork', 'user']
+            relations: ['spaceWork', 'user'],
+            select: {
+                user: {userId: true},
+                spaceWork: {id: true}
+            }
         })
         if (!reserve) { 
             throw new NotFoundException('Reserve not found');
@@ -70,6 +79,9 @@ export class ReserveRepository {
 
 
     async cancelReservationRepository(reserveId: string) {
+
+        if(!isUUID(reserveId)) throw new BadRequestException('reserve ID not valid')
+
         
         const reserva = await this.reserveRepository.findOneBy({id: reserveId}) 
 
