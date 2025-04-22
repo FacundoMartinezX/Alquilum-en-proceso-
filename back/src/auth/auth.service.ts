@@ -50,7 +50,7 @@ async login(user: LoginDto) {
     const payload = {
         id: userExisting.userId,
         email: userExisting.email,
-        isAdmin: userExisting.isAdmin
+        isAdmin: userExisting.isAdmin ? ['admin'] : ['user']
     }
 
 
