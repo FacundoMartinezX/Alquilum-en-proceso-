@@ -1,5 +1,4 @@
 import { SpaceList } from '../components/SpaceList';
-import '../styles/MainContent.css'
 
 export function MainContent() {
     return (

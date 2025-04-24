@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import '../styles/MainContent.css'
+
 
 export function SpaceList () {
 
@@ -6,31 +8,37 @@ export function SpaceList () {
 
 
     useEffect(() => {
-        fetch('http://localhost:3000/')
-        .then(res => res.json()
-        .then(data => setSpace(data))
-    )
-    },[])
+        fetch('http://localhost:3000/spaceWork')
+        .then(res => {
+            return res.json(); 
+        })
+        .then(data => setSpace(data)) 
+        .catch(error => console.error('Error en la petición:', error));
+    }, []);
 
     return (
-    <>
-
-        {
-            space.map(spa => {
-        <div className="space-card">
-            <img src="https://jeffersondealmeida.com.br/wp-content/uploads/2023/06/villa-com-piscina-de-luxo-espetacular-design-contemporaneo-arte-digital-imoveis-casa-casa-e-propriedade-ge.jpg" alt={spa.title}/>
-            <h3></h3>
-            <p>{spa.ubicacion}</p>
-            <p>{spa.precioPorDia} Por dia</p>
-            <p>{spa.capacidad} Personas</p>
-            <p>{spa.servicios}</p>
-            <p>{spa.isAvaiable ? 'Disponible' : 'No disponible'}</p>
-        </div>
-            })
-        }
-
-    </>
-    )
+        <>
+            {
+                space.map(spa => {
+                    return (
+                        <div className="space-card" key={spa.id}>
+                            <img 
+                                src={spa.fotos[0]} 
+                                alt={spa.titulo}
+                                className="img-card-space"
+                            />
+                            <h3>{spa.titulo}</h3>
+                            <p>Ubicación: {spa.ubicacion}</p>
+                            <p>{spa.precioPorDia} Por día</p>
+                            <p>{spa.capacidad} Personas</p>
+                            <p>Servicios: {spa.servicios.join(', ')}</p>
+                            <p>{spa.isAvailable ? 'Disponible' : 'No disponible'}</p>
+                        </div>
+                    );
+                })
+            }
+        </>
+    );
 
 
 }
