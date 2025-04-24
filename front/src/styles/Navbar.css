@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo {
+    margin-left: 100px;
+    color: aliceblue;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav > ul {
+    justify-content: end;
+}
+
+.navbar {
+    justify-content: space-between;
+    width: auto;
+    height: 60px;
+    background-color: rgb(82, 82, 229);
+    align-content: center;
+}
+
+.navbar-list {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 540px;
+    margin-right: 100px;
+}
+
+.navbar-item {
+    list-style: none;
+    color: aliceblue;
+}
+
