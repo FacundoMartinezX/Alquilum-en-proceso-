@@ -16,6 +16,8 @@ border-radius: 5px;
 }
 
 .space-card {
+    width: 300px;
+    height: 400;
     margin: 5px;
     background-color: #e0e0e0;
     padding: 20px;
@@ -49,3 +51,8 @@ border-radius: 5px;
 
 .filters {
 }
+
+.link-reset {
+    text-decoration: none;
+    color: inherit;
+  }

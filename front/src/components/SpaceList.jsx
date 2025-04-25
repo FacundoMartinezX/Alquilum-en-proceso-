@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 import '../styles/MainContent.css'
 
 
@@ -18,25 +19,21 @@ export function SpaceList () {
 
     return (
         <>
+        <div className="main-content">
             {
-                space.map(spa => {
-                    return (
-                        <div className="space-card" key={spa.id}>
-                            <img 
-                                src={spa.fotos[0]} 
-                                alt={spa.titulo}
-                                className="img-card-space"
-                            />
-                            <h3>{spa.titulo}</h3>
-                            <p>Ubicación: {spa.ubicacion}</p>
-                            <p>{spa.precioPorDia} Por día</p>
-                            <p>{spa.capacidad} Personas</p>
-                            <p>Servicios: {spa.servicios.join(', ')}</p>
-                            <p>{spa.isAvailable ? 'Disponible' : 'No disponible'}</p>
-                        </div>
-                    );
-                })
+                space.map(spa => (
+                    <Link to={`/space/${spa.id}`} key={spa.id} target="_blank" className="link-reset    ">
+                      <div className="space-card">
+                        <img src={spa.fotos[0]} alt={spa.titulo} className="img-card-space"/>
+                        <p>{spa.ubicacion}</p>
+                        <p>{spa.precioPorDia} Por día</p>
+                        <p>{spa.capacidad} Personas</p>
+                        <p>{spa.isAvailable ? 'Disponible' : 'No disponible'}</p>
+                      </div>
+                    </Link>
+                  ))
             }
+            </div>
         </>
     );
 

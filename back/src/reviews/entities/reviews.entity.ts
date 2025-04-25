@@ -13,7 +13,7 @@ export class Review {
   @Column({ type: 'int' })
   calificacion: number;
 
-  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review, { onDelete: 'CASCADE'})
+  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review, { cascade: true})
   @JoinColumn({ name: 'spaceWorkId' }) 
   spaceWork: SpaceWork;
 
