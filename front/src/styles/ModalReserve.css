@@ -1,0 +1,22 @@
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-container form {
+    background-color: rgb(212, 208, 208);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 800px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }

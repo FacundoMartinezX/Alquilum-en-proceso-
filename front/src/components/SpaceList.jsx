@@ -22,7 +22,7 @@ export function SpaceList () {
         <div className="main-content">
             {
                 space.map(spa => (
-                    <Link to={`/space/${spa.id}`} key={spa.id} target="_blank" className="link-reset    ">
+                    <Link to={`/space/${spa.id}`} key={spa.id} target="_blank" className="link-reset">
                       <div className="space-card">
                         <img src={spa.fotos[0]} alt={spa.titulo} className="img-card-space"/>
                         <p>{spa.ubicacion}</p>

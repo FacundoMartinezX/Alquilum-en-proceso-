@@ -8,6 +8,7 @@
 .logo {
     margin-left: 100px;
     color: aliceblue;
+    
 }
 
 nav {
@@ -42,3 +43,8 @@ nav > ul {
     color: aliceblue;
 }
 
+
+.link-reset {
+    color: inherit;
+    text-decoration: none;
+}

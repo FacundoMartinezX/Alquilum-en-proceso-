@@ -98,8 +98,18 @@ export class ReserveRepository {
           }
       
           reserva.status = false
-
           await this.reserveRepository.save(reserva);
+
+    //       const reservasActivas = await this.reserveRepository.find({
+    //         where: {
+    //             spaceWork: { id: reserva.spaceWork.id }, 
+    //             status: true
+    //         }
+            
+    //     });
+    // if(reservasActivas.length === 0 ){
+    //     await this.spaceWorkRepository.update(reserva.spaceWork.id, { isAvailable: true });
+    // }
 
         return 'reserve cancel';
   }
