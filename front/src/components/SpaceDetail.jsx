@@ -9,9 +9,17 @@ import {jwtDecode} from 'jwt-decode';
 
 export function SpaceDetail () {
   const token = localStorage.getItem('authToken');
-  const decoded = jwtDecode(token);
-  const userId = decoded.id; 
+  let decode = null;
 
+  try {
+    if(token) {
+      decode = jwtDecode(token)
+    }
+  } catch (error) {
+    console.error("Token inválido:", error.message);
+  }
+
+  const userId = decode?.id 
     const { id } = useParams()
     const [space, setSpace] = useState()
     const [showModal, setShowModal] = useState(false)
