@@ -65,9 +65,9 @@ export class UserRepository {
     if(!isUUID(userId)) throw new BadRequestException('User ID not valid')
 
 
-         const { name, email, address, phone, tipoUsuario } = updateUser
+         const { name, email, address } = updateUser
 
-         await this.userRepository.update(userId,{name, email, address, phone, tipoUsuario})
+         await this.userRepository.update(userId,{name, email, address})
          const updatedUser = await this.userRepository.findOneBy({ userId });
 
          if (updatedUser) {

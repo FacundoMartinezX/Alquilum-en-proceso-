@@ -5,8 +5,12 @@ import '../styles/spaceDetail.css'
 import '../styles/ModalReserve.css'
 import "react-datepicker/dist/react-datepicker.css";
 import { SpaceDetailCard } from "./SpaceDetailCard";
+import {jwtDecode} from 'jwt-decode';
 
 export function SpaceDetail () {
+  const token = localStorage.getItem('authToken');
+  const decoded = jwtDecode(token);
+  const userId = decoded.id; 
 
     const { id } = useParams()
     const [space, setSpace] = useState()
@@ -40,7 +44,7 @@ export function SpaceDetail () {
       spaceWorkId: space.id,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
-      userId: "1c4f2d35-172f-4b6a-9e2f-199ab33ce088"
+      userId: userId
     }
 
     fetch("http://localhost:3000/reserve", {

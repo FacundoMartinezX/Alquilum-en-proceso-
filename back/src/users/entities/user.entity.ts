@@ -23,9 +23,6 @@ export class User {
   @Column({default: 'USER'})
   tipoUsuario: string;
 
-  @Column()
-  phone: number;
-
   @Column({default: false})
   isAdmin: boolean;
 
