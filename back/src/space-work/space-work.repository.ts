@@ -37,17 +37,16 @@ export class SpaceWorkRepository {
 
             const spaceWork = await this.spaceWorkRepository.findOne({
                 where: {id},
-                relations: [ 'owner', 'reservas', 'review'],
+                relations: [ 'owner', 'reservas', 'review', 'review.user'],
                 select: {
                     owner: {
-                        userId: true
-                    },
-                    review:{
-                        id: true
+                        userId: true,
+                        name: true
                     },
                     reservas: {
                         id: true
-                    }
+                    },
+                
                 }
             });
             if (!spaceWork) {

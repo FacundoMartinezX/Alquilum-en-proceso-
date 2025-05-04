@@ -5,9 +5,15 @@ import '../styles/spaceDetail.css'
 import '../styles/ModalReserve.css'
 import "react-datepicker/dist/react-datepicker.css";
 import { SpaceDetailCard } from "./SpaceDetailCard";
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export function SpaceDetail () {
+    const { id } = useParams()
+    const [space, setSpace] = useState()
+    const [showModal, setShowModal] = useState(false)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
   const token = localStorage.getItem('authToken');
   let decode = null;
 
@@ -20,12 +26,7 @@ export function SpaceDetail () {
   }
 
   const userId = decode?.id 
-    const { id } = useParams()
-    const [space, setSpace] = useState()
-    const [showModal, setShowModal] = useState(false)
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-
+  
 
     useEffect(() => {
       if (showModal) {
@@ -84,17 +85,13 @@ export function SpaceDetail () {
   
     return (
       <>
-    <SpaceDetailCard id={id} showModal={showModal} setShowModal={setShowModal} space={space} setSpace={setSpace}/>
+    <SpaceDetailCard id={id} showModal={showModal} setShowModal={setShowModal} space={space} setSpace={setSpace} userId={userId}/>
     
     {
       showModal && (
         <div className="modal-container" onClick={closeModal}>
         <form action="" onClick={(e) => e.stopPropagation()}>
           <h4>Reserve</h4>
-          <label htmlFor="opciones">Elige una opción:</label>
-              <select id="opciones" name="opcion">
-                <option value="">-- Selecciona --</option>
-              </select>
               <label>Fecha de inicio:</label>
                  <DatePicker
                    selected={startDate}

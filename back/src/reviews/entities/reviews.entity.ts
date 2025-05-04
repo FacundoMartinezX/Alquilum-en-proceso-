@@ -7,17 +7,18 @@ export class Review {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'text' })
+  
+  @Column()
   comentario: string;
-
-  @Column({ type: 'int' })
+  
+  @Column()
   calificacion: number;
 
-  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review, { cascade: true})
-  @JoinColumn({ name: 'spaceWorkId' }) 
-  spaceWork: SpaceWork;
-
   @ManyToOne(() => User, (user) => user.reviews)
-  @JoinColumn({name: 'userId'})
+  @JoinColumn({ name: 'userId' })
   user: User;
+
+  @ManyToOne(() => SpaceWork, (spaceWork) => spaceWork.review)
+  @JoinColumn({ name: 'spaceWorkId' })
+  spaceWork: SpaceWork;
 }

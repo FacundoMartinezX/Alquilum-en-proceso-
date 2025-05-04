@@ -20,19 +20,24 @@ export function SpaceList () {
     return (
         <>
         <div className="main-content">
-            {
-                space.map(spa => (
-                    <Link to={`/space/${spa.id}`} key={spa.id} target="_blank" className="link-reset">
-                      <div className="space-card">
-                        <img src={spa.fotos[0]} alt={spa.titulo} className="img-card-space"/>
-                        <p>{spa.ubicacion}</p>
-                        <p>{spa.precioPorDia} Por día</p>
-                        <p>{spa.capacidad} Personas</p>
-                        <p>{spa.isAvailable ? 'Disponible' : 'No disponible'}</p>
-                      </div>
-                    </Link>
-                  ))
-            }
+        {space.length === 0 ? (
+      <p style={{ textAlign: 'center', width: '100%' }}>
+        No hay espacios disponibles por el momento.
+      </p>
+    ) : (
+      space.map(spa => (
+        <Link to={`/space/${spa.id}`} key={spa.id} target="_blank" className="link-reset">
+          <div className="space-card">
+            <div className="container-image">
+              <img src={spa.fotos[0]} alt={spa.titulo} className="img-card-space" />
+            </div>
+            <h4>{spa.ubicacion}</h4>
+            <p>{spa.precioPorDia} Por día</p>
+            <p>{spa.isAvailable ? 'Disponible' : 'No disponible'}</p>
+          </div>
+        </Link>
+      ))
+    )}
             </div>
         </>
     );

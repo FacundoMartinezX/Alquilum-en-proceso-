@@ -1,7 +1,7 @@
 import { Reserve } from 'src/reserve/entities/reserve.entity';
+import { Review } from 'src/reviews/entities/reviews.entity';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Review } from './reviews.entity';
 
 @Entity()
 export class User {

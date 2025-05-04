@@ -11,10 +11,15 @@
       return this.reviewsService.getAllReviewsService();
     }
     
-      @Get(':id')
-      getReviewByIdController(@Param('id') id: string) {  
-        return this.reviewsService.getReviewByIdService(id);
-      }
+    @Get(':id')
+    getReviewByIdController(@Param('id') id: string) {  
+      return this.reviewsService.getReviewByIdService(id);
+    }
+    
+    @Get("/rating/:id")
+    ratingReviewsController(@Param('id') id: string) {
+      return this.reviewsService.ratingReviewsService(id);
+    }
 
     @Post()
     createReviewController(@Body() review: CreateReviewDto) {

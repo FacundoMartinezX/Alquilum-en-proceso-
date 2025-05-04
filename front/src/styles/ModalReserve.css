@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* fondo oscuro */
+  background: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@
 }
 
 .modal-container button {
-  background-color: #007bff;
+  background-color: rgb(73, 73, 242);
   color: white;
   border: none;
   padding: 0.8rem;
@@ -58,7 +58,7 @@
 }
 
 .modal-container button:hover {
-  background-color: #0056b3;
+  background-color: rgb(61, 61, 194);
 }
 
 @keyframes fadeIn {

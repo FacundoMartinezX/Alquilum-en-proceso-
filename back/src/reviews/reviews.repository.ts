@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReviewDto } from './dtos/reviews.dto';
 import { Review } from './entities/reviews.entity';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { User } from 'src/users/entities/user.entity';
@@ -25,15 +25,30 @@ export class ReviewsRepository {
         return reviews;
   }
 
-  getReviewByIdRepository(id: string) {
+  async ratingReviewsRepository(id: string) {
+    const reviews = await this.reviewsRepository.find({
+      where: { spaceWork: Equal(id) },
+    });
+  
+    if (reviews.length === 0) return { promedio: 0 };
+  
+    const total = reviews.reduce((sum, r) => sum + r.calificacion, 0);  
+    const promedio = total / reviews.length;
+  
+    return { promedio: Number(promedio.toFixed(1)) };
+  }
+
+ async getReviewByIdRepository(id: string) {
 
     if(!isUUID(id)) throw new BadRequestException('User ID not valid')
 
-    const review = this.reviewsRepository.findOne({
+    const review = await this.reviewsRepository.findOne({
       where: {id},
       relations: ['user', 'spaceWork'],
       select: {user: {userId: true}, spaceWork: {id: true}}
     });
+
+    console.log(review)
 
     if(!review) new NotFoundException('review not found')
 
@@ -65,7 +80,7 @@ export class ReviewsRepository {
     const result = await this.reviewsRepository.findOne({
       where: {id: savedReview.id},
       relations: ['spaceWork', 'user'],
-      select: {spaceWork: {id: true}, user: {userId: true}}
+      select: {spaceWork: {id: true}, user: {userId: true, name: true}}
     })
 
     return result

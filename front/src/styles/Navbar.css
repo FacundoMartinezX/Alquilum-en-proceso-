@@ -7,14 +7,14 @@
 
 .logo {
     margin-left: 100px;
-    color: aliceblue;
+    color: black;
     margin-right: 1rem
     
 }
 
 .navbar {
     width: 100%;
-    background-color: rgb(73, 73, 242);
+    background-color:white;
     padding: 1rem;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
   }
@@ -27,6 +27,9 @@
   .navbar-left, .navbar-center, .navbar-right {
     display: flex;
     align-items: center;
+    font-weight: 100;
+    font-size: 16px;
+
   }
 
   .navbar-right {
@@ -45,7 +48,7 @@
 
   
   .navbar-item {
-    color: white;
+    color: black;
     text-decoration: none;
   }
 

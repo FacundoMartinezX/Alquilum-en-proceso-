@@ -10,6 +10,10 @@ export class ReviewService {
     return this.reviewsRepository.getAllReviewsRepository();
   }
 
+  ratingReviewsService(id:string) {
+    return this.reviewsRepository.ratingReviewsRepository(id);
+  }
+
   getReviewByIdService(id: string) {
     return this.reviewsRepository.getReviewByIdRepository(id);
   }

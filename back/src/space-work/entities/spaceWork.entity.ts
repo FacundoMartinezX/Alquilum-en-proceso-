@@ -1,5 +1,5 @@
 import { Reserve } from "src/reserve/entities/reserve.entity";
-import { Review } from "src/users/entities/reviews.entity";
+import { Review } from "src/reviews/entities/reviews.entity";
 import { User } from "src/users/entities/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 

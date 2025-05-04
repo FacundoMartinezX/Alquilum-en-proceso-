@@ -1,29 +1,24 @@
 .main-content {
     display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  justify-content: center;
-  max-width: 1000px;
-  margin: auto;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 18px;
+    max-width: 1350px; 
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-}
+  .img-card-space {
+    width: 100%;
+    object-fit: cover;
+  }
 
-.img-card-space {
-width: 100%;
-max-width: 300px;
-height: auto;
-border-radius: 5px;
-}
+  .container-image > img{
+    height: 290px;
+    border-radius: 15px;
+  }
 
 .space-card {
-    width: 300px;
-    height: 400;
-    margin: 5px;
-    background-color: #e0e0e0;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    width: 318px;
 }
 
 .space-card > P {
@@ -33,8 +28,14 @@ border-radius: 5px;
     line-height: 1.5;
 }
 
+
 .space-card > h3 {
     font-size: 14px;
+    color: black;
+    font-weight: 500;
+}
+.space-card > h4 {
+    font-size: 16px;
     color: black;
     font-weight: 500;
 }
