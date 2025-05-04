@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReviewDto } from './dtos/reviews.dto';
 import { Review } from './entities/reviews.entity';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SpaceWork } from 'src/space-work/entities/spaceWork.entity';
 import { User } from 'src/users/entities/user.entity';
@@ -23,19 +23,6 @@ export class ReviewsRepository {
         }
 
         return reviews;
-  }
-
-  async ratingReviewsRepository(id: string) {
-    const reviews = await this.reviewsRepository.find({
-      where: { spaceWork: Equal(id) },
-    });
-  
-    if (reviews.length === 0) return { promedio: 0 };
-  
-    const total = reviews.reduce((sum, r) => sum + r.calificacion, 0);  
-    const promedio = total / reviews.length;
-  
-    return { promedio: Number(promedio.toFixed(1)) };
   }
 
  async getReviewByIdRepository(id: string) {

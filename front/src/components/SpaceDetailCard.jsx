@@ -21,20 +21,13 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
   }, [id, setSpace]);
 
   useEffect(() => {
-    const fetchAverageRating = async () => {
-      try {
-        const res = await fetch(
-          `http://localhost:3000/reviews/rating/${spaceWorkId}`
-        );
-        const data = await res.json();
-        setAverageRating(data.promedio);
-      } catch (err) {
-        console.error("Error al obtener el promedio:", err);
-      }
-    };
-
-    fetchAverageRating();
-  }, [spaceWorkId]);
+    if (space?.review?.length > 0) {
+      const total = space.review.reduce((sum, r) => sum + r.calificacion, 0);
+      const promedio = total / space.review.length;
+      const promedioFixed = promedio.toFixed(1)
+      setAverageRating(promedioFixed);
+    }
+  }, [space?.review]);
 
   const handleSubmitReview = async(e) => {
     e.preventDefault()
@@ -65,7 +58,7 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
             review: [...prev.review, data]
         }))
         setComentario("");
-        setCalificacion("");
+        setCalificacion(0);
 
         }else {
           alert(data.message || "Error al crear la reseña");
