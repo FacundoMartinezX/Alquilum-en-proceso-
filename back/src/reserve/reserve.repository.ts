@@ -64,6 +64,8 @@ export class ReserveRepository {
 
     const creatingReserve = this.reserveRepository.create({
         ...reserve,
+        startDate: spaceWork.startDate,
+        endDate:spaceWork.endDate,
         spaceWork: spaceWork,
         user: user
     });

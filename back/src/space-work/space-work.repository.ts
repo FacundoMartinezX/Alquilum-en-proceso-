@@ -72,6 +72,10 @@ export class SpaceWorkRepository {
             const { userId, ...spaceWorkData } = spaceWork;
             const owner = await this.userRepository.findOneBy({userId: userId})
 
+            if (!owner) {
+                throw new NotFoundException('There is no owner');
+            }
+
             const newSpaceWork = this.spaceWorkRepository.create({
                 ...spaceWorkData,
                 owner
@@ -98,7 +102,7 @@ export class SpaceWorkRepository {
             if(!isUUID(id)) throw new BadRequestException('space work ID not valid')
 
 
-            const {titulo, descripcion, ubicacion,precioPorDia, capacidad, servicios, fotos} = updateData;
+            const {titulo, descripcion, ubicacion, precio, capacidad, servicios, fotos} = updateData;
 
             const spaceWork = await this.spaceWorkRepository.findOneBy({id})
             
@@ -107,7 +111,7 @@ export class SpaceWorkRepository {
 
             }
 
-            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion , precioPorDia, capacidad, servicios, fotos})
+            await this.spaceWorkRepository.update(id, {titulo, descripcion, ubicacion , precio, capacidad, servicios, fotos})
             
             return 'update successfully'
         }

@@ -18,7 +18,13 @@ export class SpaceWork {
   ubicacion: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  precioPorDia: number;
+  precio: number;
+
+  @Column({ type: 'timestamp' })
+  startDate: Date;
+
+  @Column({ type: 'timestamp' })
+  endDate: Date;
 
   @Column({ type: 'integer', default: 0 })
   capacidad: number;

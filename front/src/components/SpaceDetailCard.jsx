@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Review } from "./review"; // Suponiendo que Review es un componente para mostrar reseñas
+import { FaUser } from "react-icons/fa";
+import { Review } from "./review"; 
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import {  useParams } from "react-router-dom";
@@ -10,14 +11,24 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
   const [calificacion, setCalificacion] = useState(0);
   const [comentario, setComentario] = useState('');
   const [photoIndex, setPhotoIndex] = useState(0);
+  const [modalReview, setModalReview] = useState(false)
   const { id: spaceWorkId } = useParams();
   const token = localStorage.getItem("authToken");
   const isLoggedIn = !!token;
 
   useEffect(() => {
     fetch(`http://localhost:3000/spaceWork/${id}`)
-      .then((res) => res.json())
-      .then((data) => setSpace(data));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Espacio no encontrado");
+        }
+        return res.json();
+      })
+      .then((data) => setSpace(data))
+      .catch((error) => {
+        console.error("Error al cargar el espacio:", error);
+        setSpace(null); 
+      });
   }, [id, setSpace]);
 
   useEffect(() => {
@@ -44,32 +55,29 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(dataReview)
-    })
+        });
 
         const data = await res.json()
 
-        console.log(data)
-
         if(res.status === 201) {
-          alert('reserva con exito')
-
+          alert('Reseña enviada con éxito');
           setSpace((prev) => ({
             ...prev,
             review: [...prev.review, data]
-        }))
-        setComentario("");
-        setCalificacion(0);
-
-        }else {
+          }));
+          setComentario("");
+          setCalificacion(0);
+        } else {
           alert(data.message || "Error al crear la reseña");
         }
-
     } catch (error) {
-      console.error("Error al publicar la review:", error);
+      console.error("Error al publicar la reseña:", error);
     }
+
+    setModalReview(false);
   }
 
-  if (!space) return <p>Cargando...</p>;
+  if (!space) return <p>El espacio no existe o hubo un error al cargarlo.</p>;
 
   const openLightbox = (index) => {
     setPhotoIndex(index);
@@ -97,59 +105,91 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
 
         <div className="container-description">
           <div className="container-left-lateral">
-            <p>{space.ubicacion}</p>
-            <p>{space.servicios.join(", ")}</p>
+            <p className="ubicacion">{space.ubicacion}</p>
+            <p className="servicios">{space.servicios.join(", ")}</p>
             <p>
-              {averageRating !== null &&
-                `Promedio de calificación: ${averageRating}★ · ${space.review.length} Evaluaciones`} 
+              {averageRating !== null && (
+                <>
+                  ⭐{averageRating} ·{" "}
+                  <a href="#section-reviews" style={{ textDecoration: "underline", cursor: "pointer", color: "black" }}>
+                    {space.review.length} Evaluaciones
+                  </a>
+                </>
+              )}
             </p>
-            <p>Owner: {space?.owner?.name}</p>
-            <p>Descripcion:</p>
-            <p>{space.descripcion}</p>
+
+            <p className="owner">
+              <span className="owner-icon">
+                <FaUser size={16} color="white" />
+              </span>
+              Owner: {space?.owner?.name}
+            </p>
+
+            <div className="description-box">
+              <h5 className="description-title">Descripción:</h5>
+              <p>{space.descripcion}</p>
+            </div>
+
+            <div className="reviews-section" id="section-reviews">
+              <h2>Reviews</h2>
+              <button onClick={() => { setModalReview(true); }}>Make a review</button>
+
+              {modalReview && (
+                <div className="modal-overlay">
+                  <div className="modal-content">
+                    <h3>Escribí tu reseña</h3>
+                    <form onSubmit={handleSubmitReview}>
+                      <select
+                        className="options-reviews"
+                        value={calificacion}
+                        onChange={(e) => setCalificacion(parseInt(e.target.value))}
+                        required>
+                        <option value="" disabled>Calificación</option>
+                        <option value="1">⭐ 1</option>
+                        <option value="2">⭐ 2</option>
+                        <option value="3">⭐ 3</option>
+                        <option value="4">⭐ 4</option>
+                        <option value="5">⭐ 5</option>
+                      </select>
+                      <input
+                        type="text"
+                        placeholder="Comentario"
+                        value={comentario}
+                        onChange={(e) => setComentario(e.target.value)}
+                        required
+                      />
+                      <div className="modal-buttons">
+                        <button type="submit">Enviar</button>
+                        <button type="button" onClick={() => setModalReview(false)}>Cancelar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {space.review && space.review.length > 0 ? (
+                space.review.map((review) => (
+                  <Review key={review.id} review={review} />
+                ))
+              ) : (
+                <p>No hay reseñas para este espacio.</p>
+              )}
+            </div>
           </div>
 
           <div className="container-rigth-lateral">
-            {isLoggedIn ? (
-              <button onClick={() => setShowModal(true)}>Reserve</button>
-            ) : (
-              <p>
-                <em>Iniciá sesión para reservar este espacio.</em>
-              </p>
-            )}
+            <div className="content-rigth-lateral">
+              <div className="container-card-reserve">
+                <p>${space.precio}</p>
+                <p>{new Date(space.startDate).toLocaleDateString("es-AR")} al {new Date(space.endDate).toLocaleDateString("es-AR")}</p>
+              </div>
+              {isLoggedIn ? (
+                <button onClick={() => setShowModal(true)}>Reserve</button>
+              ) : (
+                <p><em>Iniciá sesión para reservar este espacio.</em></p>
+              )}
+            </div>
           </div>
-        </div>
-
-        <div className="reviews-section">
-          
-          <h2>Reseñas</h2>
-
-              <form action=""> 
-              <input
-                type="number"
-                placeholder="Calificación (1-5)"
-                value={calificacion}
-                min="1"
-                max="5"
-                onChange={(e) => setCalificacion(parseInt(e.target.value))}
-                required
-              />
-              <input 
-                type="text"
-                placeholder="Comentario"
-                value={comentario}
-                onChange={(e) => setComentario(e.target.value)}
-                required>
-              </input>
-              <button type="submit" onClick={handleSubmitReview}>Enviar</button>
-              </form> 
-
-          {space.review && space.review.length > 0 ? (
-            space.review.map((review) => (
-              <Review key={review.id} review={review} />
-            ))
-          ) : (
-            <p>No hay reseñas para este espacio.</p>
-          )}
         </div>
       </div>
 

@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import '../styles/spaceDetail.css'
 import '../styles/ModalReserve.css'
 import "react-datepicker/dist/react-datepicker.css";
 import { SpaceDetailCard } from "./SpaceDetailCard";
 import { jwtDecode } from 'jwt-decode';
+import { calcularDias } from "../utils/dateCalc";
+
 
 export function SpaceDetail () {
     const { id } = useParams()
     const [space, setSpace] = useState()
     const [showModal, setShowModal] = useState(false)
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
 
   const token = localStorage.getItem('authToken');
   let decode = null;
@@ -40,19 +39,15 @@ export function SpaceDetail () {
       }
   };
   
-
+ 
   const handleReservation = (e) => {
 
     e.preventDefault()
-    if(!startDate && !endDate) {
-      alert('selecciona las fechas')
-      return;
-    }
 
     const reservationData = {
       spaceWorkId: space.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
+      startDate: new Date(space?.startDate).toISOString(),
+      endDate: new Date(space?.endDate).toISOString(),
       userId: userId
     }
 
@@ -87,35 +82,22 @@ export function SpaceDetail () {
       <>
     <SpaceDetailCard id={id} showModal={showModal} setShowModal={setShowModal} space={space} setSpace={setSpace} userId={userId}/>
     
-    {
+    { 
       showModal && (
         <div className="modal-container" onClick={closeModal}>
-        <form action="" onClick={(e) => e.stopPropagation()}>
-          <h4>Reserve</h4>
-              <label>Fecha de inicio:</label>
-                 <DatePicker
-                   selected={startDate}
-                   onChange={(date) => setStartDate(date)}
-                   selectsStart
-                   startDate={startDate}
-                   endDate={endDate}
-                   minDate={startDate}
-                   placeholderText="Seleccioná una fecha"
-                 />
-
-                  <DatePicker
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    placeholderText="Fin"
-                  />
-
-          <button type="submit" onClick={handleReservation}>Reserve</button>
-        </form>
-        </div>
+  <form className="modal-reserve-form" onClick={(e) => e.stopPropagation()}>
+    <h4>Confirmar Reserva</h4>
+    <p>
+      Fecha de reserva: del <strong>{new Date(space.startDate).toLocaleDateString("es-AR")}</strong> al <strong>{new Date(space.endDate).toLocaleDateString("es-AR")}</strong>
+    </p>
+    <p>
+      Total de días:<strong>{calcularDias(space?.startDate, space?.endDate)}</strong>
+    </p>
+    <button type="submit" onClick={handleReservation}>
+      Confirmar Reserva
+    </button>
+  </form>
+</div>
       )
     }
 

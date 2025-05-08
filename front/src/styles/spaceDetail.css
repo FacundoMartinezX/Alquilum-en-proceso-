@@ -1,10 +1,9 @@
-
 .space-detail {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .space-card-detail {
@@ -14,17 +13,23 @@
   width: 100%;
   margin: 15px;
 }
+
+.space-card-detail h1,
+.space-card-detail h2 {
+  font-weight: 100;
+}
+
 .img-container {
-  justify-content: center;
   display: grid;
+  justify-content: center;
   margin: 20px auto;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: 1fr;
-  grid-gap: 4px;
+  gap: 4px;
 }
 
 .img-container img {
-  aspect-ratio: 2.2 / 0.9; 
+  aspect-ratio: 2.2 / 0.9;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -32,54 +37,288 @@
 }
 
 .img-container img:first-child {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 4
+  grid-column: 1 / 3;
+  grid-row: 1 / 4;
 }
 
-
 .container-description {
+  position: relative;
   display: flex;
   justify-content: space-between;
 }
 
-.space-card-detail h1 {
-  font-weight: 100;
-} 
-.space-card-detail h2 {
-  font-weight: 100;
-} 
-
 .container-description button {
-  margin-top: 10px;
+  margin: 20px;
   padding: 8px 16px;
-  background-color:  rgb(73, 73, 242);
+  background-color: rgb(73, 73, 242);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 300px;
+  height: 45px;
 }
 
 .container-description button:hover {
-  background-color:  rgb(61, 61, 194);
-
+  background-color: rgb(61, 61, 194);
 }
 
 .container-left-lateral {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #333;
 }
 
-.container-left-lateral p:nth-child(3) {
-  margin-bottom: 60px;
-}
 .container-rigth-lateral {
-  margin-left: 300px;
-  background-color: beige;
+  width: 370px;
+  height: 250px;
+  position: sticky;
+  top: 70px;
+  align-self: flex-start;
   display: flex;
-  width: 50%;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  border-radius: 12px;
+}
+
+.content-rigth-lateral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ubicacion {
+  font-size: 25px;
+  color: #333; /* 'bei' no es un color válido */
+}
+
+.descripcion-box {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.description-title {
+  font-weight: 200;
+  font-size: 16.5px;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.owner {
+  margin: 45px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  box-shadow: 0 -4px 4px -4px rgba(0, 0, 0, 0.2),
+              0 4px 4px -4px rgba(0, 0, 0, 0.2);
+}
+
+.owner-icon {
+  background-color: rgb(73, 73, 242);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reviews-section {
+  width: 100%;
+  margin-top: 2rem;
+  /* padding: 1.5rem; */
+  border-radius: 8px;
+}
+
+.reviews-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.reviews-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.reviews-section input[type="number"],
+.reviews-section input[type="text"] {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reviews-section button {
+  margin: 0;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  width: 150px;
+  margin-bottom: 1rem;
+}
+
+.reviews-section button:hover {
+  background-color: #0056b3;
+}
+
+.reviews-section p {
+  color: #555;
+  font-size: 1rem;
+}
+
+.container-card-reserve {
+  width: 300px;
+  height: 100px;
+  background-color: #fff;
+  padding: 1.2rem;
+  border: 1px solid black;
+  text-decoration: underline;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+  font-size: 1rem;
+  color: #333;
+}
+
+.container-card-reserve p:nth-child(1) {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #222;
+  margin: 0;
+}
+
+.container-card-reserve p:nth-child(2) {
+  font-size: 1rem;
+  color: #666;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-reserve-form {
+  background-color: #f9f9ff;
+  border: 1px solid #dcdcff;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 50, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-reserve-form h4 {
+  font-size: 1.5rem;
+  color: #2c2c5e;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.modal-reserve-form p:nth-child(2) {
+  border: 1px solid black;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 16px;  
+  border-radius: 16px;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.5;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-reserve-form p:nth-child(3) {
+  font-size: 1rem;
+  color: #444;  
+  display: flex;
+  justify-content: center;
+}
+
+.modal-reserve-form button {
+  margin-top: 1rem;
+  align-self: center;
+  padding: 0.75rem 2rem;
+  background-color: #4a4aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.modal-reserve-form button:hover {
+  background-color: #3c3cce;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  height: 250px;
+}
+
+.modal-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.options-reviews {
+  height: 30px;
 }

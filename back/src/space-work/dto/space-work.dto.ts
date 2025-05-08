@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray, IsDate } from 'class-validator';
 
 export class CreateSpaceDto {
 
@@ -35,7 +36,15 @@ export class CreateSpaceDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  precioPorDia: number;
+  precio: number;
+
+  @IsDate()
+  @Type(() => Date)
+  startDate: Date;
+
+  @IsDate()
+  @Type(() => Date)
+  endDate: Date;
 
   @ApiProperty({
     description: 'Capacidad máxima de personas',
