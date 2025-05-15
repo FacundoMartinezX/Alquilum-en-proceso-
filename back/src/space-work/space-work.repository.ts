@@ -5,13 +5,15 @@ import { Repository } from "typeorm";
 import { CreateSpaceDto } from "./dto/space-work.dto";
 import { User } from "src/users/entities/user.entity";
 import { isUUID } from "class-validator";
-
+import { Reserve } from "src/reserve/entities/reserve.entity";
 @Injectable()
 
 export class SpaceWorkRepository {
    
     constructor(@InjectRepository(SpaceWork) private readonly spaceWorkRepository: Repository<SpaceWork>,
-    @InjectRepository(User) private readonly userRepository: Repository<User>) {}
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Reserve) private readonly reservationRepository: Repository<Reserve>
+) {}
 
         async getSpaceWorksRepository() {
             const spacesWork =  await this.spaceWorkRepository.find({
@@ -75,6 +77,11 @@ export class SpaceWorkRepository {
             if (!owner) {
                 throw new NotFoundException('There is no owner');
             }
+
+            if (new Date(spaceWork.startDate) > new Date(spaceWork.endDate)) {
+                throw new BadRequestException("La fecha de inicio debe ser anterior o igual a la fecha de finalización.");
+                }
+
 
             const newSpaceWork = this.spaceWorkRepository.create({
                 ...spaceWorkData,

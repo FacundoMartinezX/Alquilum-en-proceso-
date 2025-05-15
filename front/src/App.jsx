@@ -5,6 +5,8 @@ import { SpaceDetail } from "./components/SpaceDetail";
 import { SignUp } from "./pages/SignUp";
 import { Navbar } from "./pages/Navbar";
 import { Login } from "./pages/Login";
+import { CreateSpaceWork } from "./pages/CreateSpaceWork";
+import { MyReservations } from "./pages/MyReservations";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/space/:id" element={<SpaceDetail/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/createspacework" element={<CreateSpaceWork/>}/>
+        <Route path="/myReservations" element={<MyReservations/>}/>
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ReserveService } from './reserve.service';
 import { CreateReservationDto } from './dto/reserve.dto';
-
+import { AuthGuard } from 'src/guards/auth.guard';
+    
+@UseGuards(AuthGuard)
 @Controller('reserve')
 export class ReserveController {
     constructor(private readonly reserveService: ReserveService) {}

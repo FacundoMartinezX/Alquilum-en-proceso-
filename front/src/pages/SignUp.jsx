@@ -31,7 +31,6 @@ import { useNavigate } from "react-router-dom";
 
             if (response.ok) {
                 console.log('Usuario registrado:', data);
-                // Podés redirigir al login o a la home
 
                 setFormData({
                     name: "",

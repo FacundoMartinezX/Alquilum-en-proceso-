@@ -14,9 +14,6 @@ export class Reserve {
   @Column({ type: 'timestamp' })
   endDate: Date;
 
-  @Column({ nullable: true })
-  duration?: string;
-
   @Column({default: true})
   status: boolean;
 

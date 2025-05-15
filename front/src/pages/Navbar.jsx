@@ -1,66 +1,96 @@
-import { useState } from 'react';
-import '../styles/Navbar.css'
+import { useState, useEffect, useRef } from 'react';
+import '../styles/Navbar.css';
 import { Link, useNavigate } from "react-router-dom";
 
-
 export function Navbar() {
-  const token = localStorage.getItem('authToken')
-  const isLoggedIn = !!token
-  const [dropDown, setDropDown] = useState(false)
+  const token = localStorage.getItem('authToken');
+  const isLoggedIn = !!token;
+  const [dropDown, setDropDown] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+  const perfilRef = useRef(null); 
 
-   const handleDropDown = () => {
-      localStorage.removeItem('authToken')
-      setDropDown(false)
-      navigate('/')
-      window.location.reload();
-   }
+  const handleDropDown = () => {
+    localStorage.removeItem('authToken');
+    setDropDown(false);
+    navigate('/');
+    window.location.reload();
+  };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        perfilRef.current &&
+        !perfilRef.current.contains(event.target)
+      ) {
+        setDropDown(false);
+      }
+    };
 
-    return (
-        
-      <header className='navbar'>
-        <nav className='navbar-container'>
-          <div className='navbar-left'>
-            <Link to="/" className='link-reset'>
-              <div className='logo'>Logo</div>
+    if (dropDown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropDown]);
+
+  return (
+    <header className='navbar'>
+      <nav className='navbar-container'>
+
+        {/* Izquierda - Logo */}
+        <div className='navbar-section left'>
+          <Link to="/" className='link-reset'>
+            <div className='logo'>Logo</div>
+          </Link>
+        </div>
+
+        {/* Centro */}
+        <div className='navbar-section center'>
+          <Link to="/" className='link-reset'>
+            <div className="navbar-item center-text">Coworking Spaces</div>
+          </Link>
+        </div>
+
+        {/* Derecha */}
+        <div className='navbar-section right'>
+          {isLoggedIn && (
+            <Link to="/createSpaceWork" className='link-reset'>
+              <div className="navbar-item cys">Create your space</div>
             </Link>
-          </div>
+          )}
 
-          <div className='navbar-center'>
-              <Link to="/" className='link-reset'>
-                <div className="navbar-item">Coworking Spaces</div>
-              </Link>
-          </div>
-
-        {
-          isLoggedIn ? (
-            <div className="navbar-right">
-              <div
-                className="navbar-item perfil-container"
-                onClick={() => setDropDown(!dropDown)}>
-                Perfil ⌄
-                {
-                  dropDown && (
-                    <div className="dropdown">
-                      <button onClick={handleDropDown}>Cerrar sesión</button>
-                    </div>
-                  )
-                }
-              </div>
+          {isLoggedIn ? (
+            <div
+              ref={perfilRef}
+              className="navbar-item perfil-container"
+              onClick={() => setDropDown(!dropDown)}
+            >
+              Perfil
             </div>
           ) : (
-            
-          <div className="navbar-right">
-            <Link to="/signup" className="navbar-item">SignUp</Link>
-            <Link to="/login" className="navbar-item">Login</Link>
+            <>
+              <Link to="/signup" className="navbar-item">SignUp</Link>
+              <Link to="/login" className="navbar-item">Login</Link>
+            </>
+          )}
+        </div>
+      </nav>
+
+      {isLoggedIn && dropDown && (
+        <div className="navbar-dropdown-container" ref={dropdownRef}>
+          <div className='navbar-dropdown'>
+            <Link to="/myReservations" onClick={() => setDropDown(false)}>
+              My reservations
+            </Link>
+            <button onClick={handleDropDown}>Log out</button>
           </div>
-          )
-
-        }
-
-        </nav>
-
-      </header>
-    );
-  }
+        </div>
+      )}
+    </header>
+  );
+}

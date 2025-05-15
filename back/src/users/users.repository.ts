@@ -12,7 +12,7 @@ export class UserRepository {
   constructor( @InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async getUsersRepository() {
-    const users = await this.userRepository.find(); 
+    const users = await this.userRepository.find({relations: ['reservas']}); 
 
     if (users.length === 0) {
       throw new NotFoundException('users not found');

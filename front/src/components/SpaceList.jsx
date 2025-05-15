@@ -8,20 +8,30 @@ export function SpaceList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/spaceWork")
-      .then((res) => {
-        if (!res.ok) throw new Error("Not foud spaces");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Respuesta de la API:", data);
-        setSpace(Array.isArray(data) ? data : data.data || []);
-      })
-      .catch((error) => {
-        console.error("Error en la petición:", error);
-        setError(error.message);
-      });
-  }, []);
+  const token = localStorage.getItem("authToken");
+
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+
+  fetch("http://localhost:3000/spaceWork", {
+    method: "GET",
+    headers,
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("No se encontraron espacios");
+      return res.json();
+    })
+    .then((data) => {
+      setSpace(Array.isArray(data) ? data : data.data || []);
+      setError(null);
+    })
+    .catch((error) => {
+      console.error("Error en la petición:", error);
+      setError(error.message);
+    });
+}, []);
 
   return (
     <div className="main-content">

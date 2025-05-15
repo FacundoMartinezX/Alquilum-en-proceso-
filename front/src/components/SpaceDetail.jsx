@@ -54,7 +54,9 @@ export function SpaceDetail () {
     fetch("http://localhost:3000/reserve", {
       method: "POST",
       headers: {
-        "Content-type": "application/json"
+        Authorization: `Bearer ${token}`, 
+        "Content-type": "application/json",
+        
       },
       body: JSON.stringify(reservationData)
     })

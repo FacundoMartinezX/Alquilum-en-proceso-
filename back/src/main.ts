@@ -11,8 +11,8 @@ async function bootstrap() {
   app.use(bodyParser.json())
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true, // Convierte automáticamente los datos a su tipo correspondiente (por ejemplo, convertir un string a un número)
-      whitelist: true, // Elimina propiedades que no están definidas en el DTO
+      transform: true, 
+      whitelist: true, 
     }),
   );
 

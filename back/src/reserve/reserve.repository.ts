@@ -25,6 +25,8 @@ export class ReserveRepository {
         if (reserves.length === 0) {
             throw new NotFoundException('reserves not found');
           }
+
+          return reserves;
     } 
 
     getReserveByIdRepository(id: string) {
@@ -58,6 +60,10 @@ export class ReserveRepository {
         throw new BadRequestException('Space work not found');
     }
 
+    if (!user) {
+        throw new BadRequestException('user not found');
+    }
+
     if (spaceWork.isAvailable === false) {
         throw new BadRequestException('Space work is not available');
     }
@@ -85,7 +91,10 @@ export class ReserveRepository {
         if(!isUUID(reserveId)) throw new BadRequestException('reserve ID not valid')
 
         
-        const reserva = await this.reserveRepository.findOneBy({id: reserveId}) 
+        const reserva = await this.reserveRepository.findOne({
+            where: { id: reserveId },
+            relations: ['spaceWork'],
+});
 
         if (!reserva) {
             throw new NotFoundException(
@@ -102,16 +111,16 @@ export class ReserveRepository {
           reserva.status = false
           await this.reserveRepository.save(reserva);
 
-    //       const reservasActivas = await this.reserveRepository.find({
-    //         where: {
-    //             spaceWork: { id: reserva.spaceWork.id }, 
-    //             status: true
-    //         }
+          const reservasActivas = await this.reserveRepository.find({
+            where: {
+                spaceWork: { id: reserva.spaceWork.id }, 
+                status: true
+            }
             
-    //     });
-    // if(reservasActivas.length === 0 ){
-    //     await this.spaceWorkRepository.update(reserva.spaceWork.id, { isAvailable: true });
-    // }
+        });
+    if(reservasActivas.length === 0 ){
+        await this.spaceWorkRepository.update(reserva.spaceWork.id, { isAvailable: true });
+    }
 
         return 'reserve cancel';
   }

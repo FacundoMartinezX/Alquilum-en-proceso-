@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-import { Review } from "./review"; 
+import { Review } from "./Review"; 
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import {  useParams } from "react-router-dom";
@@ -17,7 +17,18 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
   const isLoggedIn = !!token;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/spaceWork/${id}`)
+
+     const token = localStorage.getItem("authToken"); 
+
+    const headers = {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+
+    fetch(`http://localhost:3000/spaceWork/${id}`, {
+      method: "GET",
+      headers: headers,
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Espacio no encontrado");
@@ -52,7 +63,9 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
         const res = await fetch(`http://localhost:3000/reviews/`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`, 
+            'Content-Type': 'application/json',
+
           },
           body: JSON.stringify(dataReview)
         });
@@ -92,7 +105,7 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
         <h1>{space.titulo}</h1>
 
         <div className="img-container">
-          {space.fotos.map((foto, index) => (
+          {space.fotos.slice(0,4).map((foto, index) => (
             <img
               src={foto}
               alt=""
@@ -127,7 +140,7 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
 
             <div className="description-box">
               <h5 className="description-title">Descripción:</h5>
-              <p>{space.descripcion}</p>
+              <p>{space.descripcion}</p>  
             </div>
 
             <div className="reviews-section" id="section-reviews">
