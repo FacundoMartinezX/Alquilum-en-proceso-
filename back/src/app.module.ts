@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm';
 import { ReviewsModule } from './reviews/reviews.module';
 import { JwtModule } from '@nestjs/jwt';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
       inject: [ConfigService],
       useFactory: typeOrmConfig
     }),
-    UsersModule, ReserveModule, SpaceWorkModule, PaymentsModule, AuthModule, ReviewsModule,
+    UsersModule, ReserveModule, SpaceWorkModule, PaymentsModule, AuthModule, ReviewsModule, FilesModule,
   JwtModule.register({
     global: true,
     secret: process.env.JWT_SECRET,
