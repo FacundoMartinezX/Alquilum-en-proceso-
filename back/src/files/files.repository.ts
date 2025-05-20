@@ -16,12 +16,12 @@ export class FileUploadRepository {
     private readonly spaceWorksRepository: Repository<SpaceWork>
   ) {}
 
-  async uploadImage(id: string, file: Express.Multer.File) {
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
+  async uploadImage(id: string, files: Express.Multer.File[]) {
+    // cloudinary.config({
+    //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    //   api_key: process.env.CLOUDINARY_API_KEY,
+    //   api_secret: process.env.CLOUDINARY_API_SECRET,
+    // });
 
     const spaceWork = await this.spaceWorksRepository.findOneBy({ id });
     if (!spaceWork) {
@@ -29,7 +29,12 @@ export class FileUploadRepository {
     }
 
     try {
-      const value: Promise<UploadApiResponse> = new Promise((resolve, reject) => {
+
+      const uploadedUrls: string[] = []
+
+      for (const file of files) {
+
+         const value: Promise<UploadApiResponse> = new Promise((resolve, reject) => {
         const upload = cloudinary.uploader.upload_stream(
           { resource_type: 'auto' },
           (error, result) => (error ? reject(error) : resolve(result)),
@@ -37,16 +42,20 @@ export class FileUploadRepository {
         toStream(file.buffer).pipe(upload); 
       });
 
-      const uploaded = await value;
+      uploadedUrls.push((await value).secure_url)
 
       await this.spaceWorksRepository.update(
         { id },
         {
-          fotos: [...(spaceWork.fotos || []), uploaded.secure_url],
+          fotos: [...(spaceWork.fotos || []), ...uploadedUrls],
         },
       );
 
-      return uploaded.secure_url;
+      
+    }
+    return {url: uploadedUrls};
+
+     
 
     } catch (error) {
       console.error(error);

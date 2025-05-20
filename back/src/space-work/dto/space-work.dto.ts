@@ -62,6 +62,14 @@
     servicios: string[];
 
     @ApiProperty({
+      description: 'Lista de servicios que ofrece el espacio',
+      example: ['WiFi', 'Cocina', 'Estacionamiento'],
+    })
+    @IsNotEmpty()
+    @IsString()
+    category: string;
+
+    @ApiProperty({
       description: 'Lista de URLs de fotos del espacio',
       example: ['http://example.com/foto1.jpg', 'http://example.com/foto2.jpg'],
     })

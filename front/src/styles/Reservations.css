@@ -3,50 +3,69 @@
   max-width: 800px;
   margin: 0 auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
+  color: #2c3e50;
+  background-color: #f7fafd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 87, 216, 0.05);
 }
 
 h2 {
   margin-bottom: 1.5rem;
   text-align: center;
-  font-size: 1.8rem;
-  color: #222;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0057d8;
+  border-bottom: 2px solid #e0e6f0;
+  padding-bottom: 0.5rem;
 }
 
 .reservation-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border: 1px solid #e3e8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 87, 216, 0.08);
   padding: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  transition: transform 0.2s ease;
+}
+
+.reservation-card:hover {
+  transform: translateY(-2px);
 }
 
 .reservation-info > div {
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: #444;
+  color: #34495e;
+}
+
+.reservation-info strong {
+  color: #0057d8;
 }
 
 .cancel-button {
   background-color: #ff4d4f;
   color: white;
   border: none;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .cancel-button:hover {
   background-color: #d9363e;
+  transform: scale(1.03);
 }
 
 .reservation-card.cancelled {
-  opacity: 0.9;
-  background-color: #f2f2f2;  
+  background-color: #f0f2f5;
+  opacity: 0.8;
+  border-left: 4px solid #ff4d4f;
 }

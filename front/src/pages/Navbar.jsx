@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import '../styles/Navbar.css';
 import { Link, useNavigate } from "react-router-dom";
+import logo from '../assets/logo.png'
 
 export function Navbar() {
   const token = localStorage.getItem('authToken');
@@ -42,21 +43,15 @@ export function Navbar() {
     <header className='navbar'>
       <nav className='navbar-container'>
 
-        {/* Izquierda - Logo */}
         <div className='navbar-section left'>
           <Link to="/" className='link-reset'>
-            <div className='logo'>Logo</div>
+            <img src={logo} alt="" className='navbar-logo'/>
           </Link>
         </div>
 
-        {/* Centro */}
         <div className='navbar-section center'>
-          <Link to="/" className='link-reset'>
-            <div className="navbar-item center-text">Coworking Spaces</div>
-          </Link>
         </div>
 
-        {/* Derecha */}
         <div className='navbar-section right'>
           {isLoggedIn && (
             <Link to="/createSpaceWork" className='link-reset'>
@@ -84,7 +79,7 @@ export function Navbar() {
       {isLoggedIn && dropDown && (
         <div className="navbar-dropdown-container" ref={dropdownRef}>
           <div className='navbar-dropdown'>
-            <Link to="/myReservations" onClick={() => setDropDown(false)}>
+            <Link to="/myReservations" onClick={() => setDropDown(false)} className='my-reservations'>
               My reservations
             </Link>
             <button onClick={handleDropDown}>Log out</button>

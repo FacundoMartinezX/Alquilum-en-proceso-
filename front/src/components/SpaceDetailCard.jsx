@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { FaUser } from "react-icons/fa";
 import { Review } from "./Review"; 
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -119,12 +118,17 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
         <div className="container-description">
           <div className="container-left-lateral">
             <p className="ubicacion">{space.ubicacion}</p>
-            <p className="servicios">{space.servicios.join(", ")}</p>
+            <ul className="servicios">
+                {space.servicios.map((servicio, index) => (
+              <li key={index} className={index === 0 ? "sin-punto" : ""}>
+                {servicio}
+              </li>))}
+            </ul>
             <p>
               {averageRating !== null && (
                 <>
-                  ⭐{averageRating} ·{" "}
-                  <a href="#section-reviews" style={{ textDecoration: "underline", cursor: "pointer", color: "black" }}>
+                  ⭐{averageRating}
+                  <a href="#section-reviews" style={{ textDecoration: "underline", cursor: "pointer", color: "black", paddingLeft: "5px" }}>
                     {space.review.length} Evaluaciones
                   </a>
                 </>
@@ -133,7 +137,7 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
 
             <p className="owner">
               <span className="owner-icon">
-                <FaUser size={16} color="white" />
+                img
               </span>
               Owner: {space?.owner?.name}
             </p>
@@ -145,7 +149,9 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
 
             <div className="reviews-section" id="section-reviews">
               <h2>Reviews</h2>
-              <button onClick={() => { setModalReview(true); }}>Make a review</button>
+              <div className="review-section-make-review">
+              <button onClick={() => { setModalReview(true); }} className="make-review">Make a review</button>
+              </div>
 
               {modalReview && (
                 <div className="modal-overlay">

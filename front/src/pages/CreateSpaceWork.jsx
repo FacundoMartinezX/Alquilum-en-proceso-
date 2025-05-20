@@ -27,7 +27,9 @@ export function CreateSpaceWork() {
     }
 
     const payload = { ...spaceWork, userId };
+    payload.fotos = [];
 
+    const formData = new FormData()
     try {
       const res = await fetch('http://localhost:3000/spaceWork', {
         method: 'POST',
@@ -41,7 +43,32 @@ export function CreateSpaceWork() {
       const data = await res.json();
 
       if (res.ok) {
+
+
+        if(spaceWork.fotos?.length) {
+          for (let i = 0; i < spaceWork.fotos.length; i++) {
+            formData.append('image', spaceWork.fotos[i]);
+            
+          }
+        }
+        const uploadRes = await fetch(`http://localhost:3000/files/uploadImage/${data.id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+    const uploadData = await uploadRes.json();
+    if (uploadRes.ok) {
+      alert('Fotos subidas con éxito!');
+    } else {
+      alert('Error al subir imágenes: ' + uploadData.message);
+    }
+
+    
         alert('Espacio creado con éxito!');
+
+
       } else {
         alert('Error del servidor: ' + (data.message || 'Error desconocido'));
       }
@@ -52,7 +79,7 @@ export function CreateSpaceWork() {
   };
 
   const onchangeSpaceWork = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
 
     setSpaceWork((prev) => {
       if (name === 'precio' || name === 'capacidad') {
@@ -63,9 +90,10 @@ export function CreateSpaceWork() {
         return { ...prev, servicios: value.split(',').map((s) => s.trim()) };
       }
 
-      if (name === 'fotos') {
-        return { ...prev, fotos: value.split(',').map((s) => s.trim()) };
+      if (name === 'image') {
+        return { ...prev, fotos: files ? Array.from(files) : [] };
       }
+
 
       if (name === 'startDate' || name === 'endDate') {
         return { ...prev, [name]: new Date(value) };
@@ -123,7 +151,7 @@ export function CreateSpaceWork() {
 
         <div className="form-group">
           <label htmlFor="photo">Links a fotos (separados por coma)</label>
-          <input id="photo" type="file" name='fotos' onChange={onchangeSpaceWork}/>
+          <input id="photo" type="file" name='image' multiple onChange={onchangeSpaceWork}/>
         </div>
 
         <button type="submit" className='button-post'>Publicar espacio</button>

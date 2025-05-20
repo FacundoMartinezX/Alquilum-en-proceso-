@@ -33,6 +33,9 @@ export class SpaceWork {
   servicios: string[]; 
 
   @Column({ type: 'simple-array' })
+  category: string; 
+
+  @Column({ type: 'simple-array' })
   fotos: string[]; 
 
   @Column({ default: true })

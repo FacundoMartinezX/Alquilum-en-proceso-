@@ -117,6 +117,18 @@
   transition: max-height 0.3s ease;
 }
 
+
+.servicios {
+  display: flex;
+  gap: 4px; 
+  padding: 0;
+  margin: 0;
+  gap: 25px;
+  color: rgb(67, 66, 66);
+}
+.sin-punto {
+  list-style: none;
+}
 .owner {
   margin: 45px 0;
   display: flex;
@@ -140,7 +152,6 @@
 .reviews-section {
   width: 100%;
   margin-top: 2rem;
-  /* padding: 1.5rem; */
   border-radius: 8px;
 }
 
@@ -320,6 +331,33 @@
   justify-content: space-between;
 }
 
+.modal-buttons button {
+      color: black;
+  font-size: 15px;
+  font-weight: 100;
+  background-color: rgb(235, 235, 235);
+
+  
+}
+
+.modal-buttons button:hover {
+  background-color: rgb(223, 222, 222);
+
+  
+}
+
 .options-reviews {
   height: 30px;
+}
+
+
+.review-section-make-review button {
+  color: black;
+  font-size: 15px;
+  font-weight: 100;
+  background-color: rgb(235, 235, 235);
+}
+
+.review-section-make-review button:hover {
+background-color: rgb(223, 222, 222);
 }

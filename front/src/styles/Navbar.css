@@ -5,10 +5,11 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.logo {
-  margin-left: 100px;
-  color: black;
-  margin-right: 1rem;
+.navbar-logo {
+  margin-top: 4px;
+  height: 44px;
+  width: auto;
+  border-radius: 5px;
 }
 
 .navbar {
@@ -80,16 +81,51 @@
   top: 80px;
   right: 116px;
   background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: 1px solid #cfd9e3;
+  box-shadow: 0 4px 16px rgba(0, 87, 216, 0.1);
   padding: 1rem;
   z-index: 999;
-  border-radius: 4px;
-  width: 300px;
+  border-radius: 8px;
+  width: 280px;
+  animation: fadeIn 0.2s ease-in-out;
 }
 
 .navbar-dropdown {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+}
+
+.navbar-dropdown a,
+.navbar-dropdown button {
+  font-size: 14px;
+  padding: 10px 14px;
+  text-align: left;
+  border-radius: 6px;
+  background-color: #f4f7fb;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: rgb(73, 73, 242);
+  text-decoration: none;
+}
+
+.navbar-dropdown a:hover,
+.navbar-dropdown button:hover {
+  background-color: #e2ecfb;
+}
+
+.navbar-dropdown button {
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
