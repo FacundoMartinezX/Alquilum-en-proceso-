@@ -6,8 +6,31 @@
 }
 
 .navbar-logo {
-  margin-top: 4px;
+  position: relative;
+  display: inline-block;
   height: 44px;
+}
+
+.navbar-logo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: rgb(73, 73, 242);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+
+}
+
+.navbar-logo:hover::after {
+  transform: scaleX(1);
+}
+
+.navbar-logo img {
+  height: 100%;
   width: auto;
   border-radius: 5px;
 }
@@ -106,7 +129,7 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  color: rgb(73, 73, 242);
+  color:rgb(73, 73, 242);
   text-decoration: none;
 }
 

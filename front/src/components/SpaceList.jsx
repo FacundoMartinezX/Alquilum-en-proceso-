@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { calcularDias } from "../utils/dateCalc";
 import "../styles/MainContent.css";
+import { Filtros } from "./Filtros";
 
 export function SpaceList() {
   const [space, setSpace] = useState([]);
   const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({
+    ubicacion: "",
+    startDate: "",
+    endDate: "",
+    capacidad: "",
+  });
 
   useEffect(() => {
   const token = localStorage.getItem("authToken");
@@ -31,44 +38,61 @@ export function SpaceList() {
       console.error("Error en la petición:", error);
       setError(error.message);
     });
-}, []);
+}, []); 
+
+const espaciosFiltrados = space.filter((spa) => {
+  const matchUbicacion = !filters.ubicacion || spa.ubicacion.toLowerCase().includes(filters.ubicacion.toLowerCase());
+  const matchStartDate = !filters.startDate || new Date(spa.startDate) >= new Date(filters.startDate)
+  const matchEndDate = !filters.endDate || new Date(spa.endDate) <= new Date(filters.endDate)
+  const matchCapacidad = !filters.capacidad || spa.capacidad >= parseInt(filters.capacidad);
+
+    return matchUbicacion && matchStartDate && matchEndDate && matchCapacidad;
+
+})
+
+
 
   return (
-    <div className="main-content">
-      {error ? (
-        <p style={{ textAlign: "center", width: "100%", color: "red" }}>
-          {error}
-        </p>
-      ) : space.length === 0 ? (
-        <p style={{ textAlign: "center", width: "100%" }}>
-          No hay espacios disponibles por el momento.
-        </p>
-      ) : (
-        space.map((spa) => (
-          <Link
-            to={`/space/${spa.id}`}
-            key={spa.id}
-            target="_blank"
-            className="link-reset"
-          >
-            <div className="space-card">
-              <div className="container-image">
-                <img
-                  src={spa.fotos?.[0]}
-                  alt={spa.titulo}
-                  className="img-card-space"
-                />
-              </div>
-              <h4>{spa.ubicacion}</h4>
-              <p>
-                {spa.precio} por{" "}
-                {calcularDias(spa.startDate, spa.endDate)} días
-              </p>
-              <p>{spa.isAvailable ? "Disponible" : "No disponible"}</p>
-            </div>
-          </Link>
-        ))
-      )}
+    <>
+   <div className="main-wrapper">
+  <Filtros onFilterChange={setFilters} />
+
+  {error ? (
+    <div className="no-results">
+      <p style={{ color: "red" }}>{error}</p>
     </div>
+  ) : espaciosFiltrados.length === 0 ? (
+    <div className="no-results">
+      <p>No spaces were found that match your filters.</p>
+    </div>
+  ) : (
+    <div className="main-content">
+      {espaciosFiltrados.map((spa) => (
+        <Link
+          to={`/space/${spa.id}`}
+          key={spa.id}
+          target="_blank"
+          className="link-reset"
+        >
+          <div className="space-card">
+            <div className="container-image">
+              <img
+                src={spa.fotos?.[0]}
+                alt={spa.titulo}
+                className="img-card-space"
+              />
+            </div>
+            <h4>{spa.ubicacion}</h4>
+            <p>
+              {spa.precio} por {calcularDias(spa.startDate, spa.endDate)} días
+            </p>
+            <p>{spa.isAvailable ? "Disponible" : "No disponible"}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )}
+</div>
+    </>
   );
 }

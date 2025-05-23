@@ -1,11 +1,13 @@
 .main-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 18px;
-    max-width: 1350px; 
-    margin: 0 auto;
-    padding: 20px;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
+  max-width: 1350px;
+  width: 100%;             
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
   .img-card-space {
     width: 100%;
@@ -18,7 +20,16 @@
   }
 
 .space-card {
-    width: 318px;
+  background: white;
+  padding: 10px;
+  width: 100%;              
+  max-width: 100%;          
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+.space-card:hover {
+  transform: scale(1.01);
 }
 
 .space-card > P {
@@ -50,8 +61,22 @@
     align-items: center;
 }
 
-.filters {
+.no-results {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #717171;
+  font-size: 1.2rem;
+  text-align: center;
 }
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 .link-reset {
     text-decoration: none;

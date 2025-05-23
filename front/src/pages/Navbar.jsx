@@ -45,7 +45,9 @@ export function Navbar() {
 
         <div className='navbar-section left'>
           <Link to="/" className='link-reset'>
-            <img src={logo} alt="" className='navbar-logo'/>
+            <a className="navbar-logo" href="/">
+              <img src={logo} alt="logo" />
+            </a>
           </Link>
         </div>
 

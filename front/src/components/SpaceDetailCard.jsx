@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Review } from "./Review"; 
+import { Filtros } from "../components/Filtros"
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import {  useParams } from "react-router-dom";
@@ -149,9 +150,15 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
 
             <div className="reviews-section" id="section-reviews">
               <h2>Reviews</h2>
-              <div className="review-section-make-review">
+               <div className="review-section-make-review">
+                {isLoggedIn ? 
               <button onClick={() => { setModalReview(true); }} className="make-review">Make a review</button>
-              </div>
+              : 
+              <p></p>
+              }
+              </div> 
+              
+              
 
               {modalReview && (
                 <div className="modal-overlay">
@@ -197,7 +204,7 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
           </div>
 
           <div className="container-rigth-lateral">
-            <div className="content-rigth-lateral">
+            <div className="content-rigth-lateral"> 
               <div className="container-card-reserve">
                 <p>${space.precio}</p>
                 <p>{new Date(space.startDate).toLocaleDateString("es-AR")} al {new Date(space.endDate).toLocaleDateString("es-AR")}</p>
@@ -205,7 +212,7 @@ export function SpaceDetailCard({ setShowModal, id, space, setSpace, userId }) {
               {isLoggedIn ? (
                 <button onClick={() => setShowModal(true)}>Reserve</button>
               ) : (
-                <p><em>Iniciá sesión para reservar este espacio.</em></p>
+                <p className="margin-top-message"><em>Iniciá sesión para reservar este espacio.</em></p>
               )}
             </div>
           </div>

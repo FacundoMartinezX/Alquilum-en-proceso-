@@ -140,7 +140,6 @@
 }
 
 .owner-icon {
-  background-color: rgb(73, 73, 242);
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -347,6 +346,7 @@
 }
 
 .options-reviews {
+  margin-top: 7px;
   height: 30px;
 }
 
@@ -360,4 +360,8 @@
 
 .review-section-make-review button:hover {
 background-color: rgb(223, 222, 222);
+}
+
+.margin-top-message {
+  margin-top: 20px;
 }
