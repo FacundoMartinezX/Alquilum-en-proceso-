@@ -21,7 +21,6 @@ import {
         return true;
       }
       const { user } = context.switchToHttp().getRequest();
-      console.log(user)
       const validate = requiredRoles.some((role) => user?.roles?.includes(role));
       if (!validate)
         throw new UnauthorizedException(`You don't have permission to access`);

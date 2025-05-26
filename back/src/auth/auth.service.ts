@@ -47,10 +47,11 @@ async login(user: LoginDto) {
         throw new UnauthorizedException('Invalid credentials');
     }
 
+
     const payload = {
         id: userExisting.userId,
         email: userExisting.email,
-        isAdmin: userExisting.isAdmin ? ['admin'] : ['user']
+        roles: userExisting.isAdmin === true ? ['admin'] : ['user'],
     }
 
 

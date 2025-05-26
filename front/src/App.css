@@ -4,3 +4,9 @@
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}

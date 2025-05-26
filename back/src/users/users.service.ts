@@ -4,10 +4,13 @@ import { SignUpDto } from './dto/signUp.dto';
 
 @Injectable()
 export class UsersService {
+    
 
     constructor(private readonly userRepository: UserRepository) {
 
     }
+
+    
 
     getUsersService() {
         return this.userRepository.getUsersRepository()
@@ -21,6 +24,10 @@ export class UsersService {
     createUserService(user: SignUpDto) {
         return this.userRepository.createUserRepository(user)
 
+    }
+
+    getProfileMe(id: string) {
+        return this.userRepository.getProfileMeRepository(id);
     }
 
     updateUserService(userId: string, user:SignUpDto) {

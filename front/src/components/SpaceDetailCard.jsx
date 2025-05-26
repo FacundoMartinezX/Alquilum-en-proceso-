@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Review } from "./Review"; 
-import { Filtros } from "../components/Filtros"
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import {  useParams } from "react-router-dom";

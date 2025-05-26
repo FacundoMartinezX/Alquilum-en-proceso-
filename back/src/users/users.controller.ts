@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signUp.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -19,10 +19,18 @@ createUserController(@Body() user: SignUpDto) {
     return this.usersService.createUserService(user)
 }
 
+@Get('me')
+getProfileMe(@Req() req) {
+  return this.usersService.getProfileMe(req.user.id);
+}
+
+
 @Get(':id')
 getUserByIdController(@Param('id') userId:string) {
     return this.usersService.getUserByIdService(userId)
 }
+
+
 @Put(':id')
 updateUserController(@Param('id') userId: string, @Body() user: SignUpDto) {
 

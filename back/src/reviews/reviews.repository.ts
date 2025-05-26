@@ -35,7 +35,6 @@ export class ReviewsRepository {
       select: {user: {userId: true}, spaceWork: {id: true}}
     });
 
-    console.log(review)
 
     if(!review) new NotFoundException('review not found')
 
@@ -43,6 +42,13 @@ export class ReviewsRepository {
   }
 
   async createReviewRepository(review: CreateReviewDto) {
+        const yaExiste = await this.reviewsRepository.findOne({
+        where: { spaceWork: { id: review.spaceWorkId}, user: { userId: review.userId } },
+        });
+
+      if (yaExiste) {
+        throw new BadRequestException("Ya has realizado una reseña para este espacio.");
+      }
 
     const user = await this.userRepository.findOne({ where: { userId: review.userId } });
 
