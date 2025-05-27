@@ -30,7 +30,7 @@ export class UsersService {
         return this.userRepository.getProfileMeRepository(id);
     }
 
-    updateUserService(userId: string, user:SignUpDto) {
+    updateUserService(userId: string, user: any) {
 
         return this.userRepository.updateUserRepository(userId, user)
 

@@ -1,0 +1,147 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 85px);
+  background-color: #f7f7f7; 
+}
+
+.profile-main {
+  max-width: 800px; 
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 28px;
+  background-color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  color: #222;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.profile-header h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #222;
+  margin: 0;
+}
+
+.btn-edit {
+  background-color: rgb(73, 73, 242);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-edit:hover {
+  background-color: rgb(61, 61, 194);
+}
+
+.profile-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.profile-img {
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: #f0f0f0;
+}
+
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-content {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+}
+
+.profile-item h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #484848;
+}
+
+.profile-item p {
+  font-size: 1.05rem;
+  color: #717171;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 1.4rem;
+  color: #999;
+  font-style: italic;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal input {
+  width: 100%;
+  margin: 0.5rem 0 1rem;
+  padding: 8px;
+  border: 1px solid #ccc;
+   border-radius: 6px;
+
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin:2px;
+}
+
+.modal-buttons > button {
+  border: none;
+  padding: 10px;
+  background-color: white;
+}
+.modal-buttons > button:hover {
+  background-color:	#f8f4f4;
+  border-radius: 15px;
+  cursor: pointer;
+
+}

@@ -41,7 +41,6 @@ async login(user: LoginDto) {
     if (!userExisting) {
         throw new UnauthorizedException('Invalid credentials');
     }
-    // Valida la contraseña
     const isPasswordValid = await bcrypt.compare(user.password, userExisting.password);
     if (!isPasswordValid) {
         throw new UnauthorizedException('Invalid credentials');

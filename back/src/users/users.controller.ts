@@ -32,7 +32,7 @@ getUserByIdController(@Param('id') userId:string) {
 
 
 @Put(':id')
-updateUserController(@Param('id') userId: string, @Body() user: SignUpDto) {
+updateUserController(@Param('id') userId: string, @Body() user: any) {
 
     return this.usersService.updateUserService(userId, user)
 }

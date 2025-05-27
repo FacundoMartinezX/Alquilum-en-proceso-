@@ -26,12 +26,6 @@ export class UserDto {
   phone: string;
 
   @ApiProperty({
-    description: 'Type of the user (e.g., INQUILINO)',
-    example: 'INQUILINO',
-  })
-  tipoUsuario: string;
-
-  @ApiProperty({
     description: 'List of reviews made by the user',
     example: [],
   })

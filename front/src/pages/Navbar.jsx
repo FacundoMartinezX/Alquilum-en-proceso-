@@ -81,10 +81,14 @@ export function Navbar() {
       {isLoggedIn && dropDown && (
         <div className="navbar-dropdown-container" ref={dropdownRef}>
           <div className='navbar-dropdown'>
+            <Link to={"/profile"} onClick={() => setDropDown(false)}  >
+              Profile
+            </Link>
             <Link to="/myReservations" onClick={() => setDropDown(false)} className='my-reservations'>
               My reservations
             </Link>
             <button onClick={handleDropDown}>Log out</button>
+            
           </div>
         </div>
       )}

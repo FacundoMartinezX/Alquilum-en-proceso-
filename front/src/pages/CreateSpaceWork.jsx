@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import '../styles/createSpaceWork.css';
+import { Profile } from './profile';
 
 export function CreateSpaceWork() {
   const [spaceWork, setSpaceWork] = useState({});
@@ -156,6 +157,7 @@ export function CreateSpaceWork() {
 
         <button type="submit" className='button-post'>Publicar espacio</button>
       </form>
+
     </div>
   );
 }

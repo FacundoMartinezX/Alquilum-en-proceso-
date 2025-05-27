@@ -8,6 +8,10 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   userId: string;
 
+
+  @Column({ nullable: true })  
+  user_img: string
+
   @Column()
   name: string;
 
@@ -19,9 +23,6 @@ export class User {
   
   @Column()
   address: string;
-
-  @Column({default: 'USER'})
-  tipoUsuario: string;
 
   @Column({default: false})
   isAdmin: boolean;

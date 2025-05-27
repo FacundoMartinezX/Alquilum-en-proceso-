@@ -7,6 +7,7 @@ import { Navbar } from "./pages/Navbar";
 import { Login } from "./pages/Login";
 import { CreateSpaceWork } from "./pages/CreateSpaceWork";
 import { MyReservations } from "./pages/MyReservations";
+import { Profile } from "./pages/profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/createspacework" element={<CreateSpaceWork/>}/>
         <Route path="/myReservations" element={<MyReservations/>}/>
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </BrowserRouter>
   );

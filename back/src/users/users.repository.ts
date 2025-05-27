@@ -60,7 +60,7 @@ export class UserRepository {
       return userWithoutPassword;
     }
 
-    async updateUserRepository(userId: string, updateUser: SignUpDto) {
+    async updateUserRepository(userId: string, updateUser: any) {
 
     if(!isUUID(userId)) throw new BadRequestException('User ID not valid')
 
