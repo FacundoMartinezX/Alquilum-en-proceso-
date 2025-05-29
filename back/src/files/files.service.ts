@@ -8,4 +8,8 @@ export class FileUploadService {
   uploadImage(id: string, files: Express.Multer.File[]) {
     return this.fileUploadRepository.uploadImage(id, files);
   }
+
+  uploadImageProfileService(userId: string, file: Express.Multer.File) {
+    return this.fileUploadRepository.uploadImageProfileRepository(userId, file);
+  }
 }

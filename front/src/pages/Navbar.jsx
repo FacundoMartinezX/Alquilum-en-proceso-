@@ -67,7 +67,7 @@ export function Navbar() {
               className="navbar-item perfil-container"
               onClick={() => setDropDown(!dropDown)}
             >
-              Perfil
+              Profile
             </div>
           ) : (
             <>

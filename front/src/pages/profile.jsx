@@ -67,6 +67,39 @@ export function Profile() {
       }
   }
 
+  const onChangeFile = async (e) => {
+    console.log(user.userId);
+
+    
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const token = localStorage.getItem("authToken");
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch(`http://localhost:3000/files/uploadImageProfile/${user.userId}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setUser(prev => ({ ...prev, user_img: data.user_img })); 
+      window.location.reload();
+    } else {
+      alert('Error al subir imagen: ' + data.message);
+    }
+  } catch (err) {
+    console.error('Error al subir imagen:', err);
+    alert('Error de red al subir imagen');
+  }
+};
+
   return (
     <section className="main">
         <div className="profile-main">
@@ -79,12 +112,15 @@ export function Profile() {
 
       <div className="profile-wrapper">
         <div className="profile-img">
+          <div> 
           <img
-            src={user.user_img || '/default-profile.png'}
+            src={`${user.user_img}?t=${Date.now()}`}
             alt={`${user.name} profile`}
           />
+          </div>
+          <label htmlFor="photo-upload" className="btn-upload">Change photo</label>
+          <input id="photo-upload" type="file" style={{ display: 'none' }} onChange={onChangeFile}/>
         </div>
-
         <div className="profile-content">
           <div className="profile-item">
             <h2>Name</h2>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import '../styles/createSpaceWork.css';
-import { Profile } from './profile';
 
 export function CreateSpaceWork() {
   const [spaceWork, setSpaceWork] = useState({});
@@ -151,7 +150,7 @@ export function CreateSpaceWork() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="photo">Links a fotos (separados por coma)</label>
+          <label htmlFor="photo">Links a fotos</label>
           <input id="photo" type="file" name='image' multiple onChange={onchangeSpaceWork}/>
         </div>
 

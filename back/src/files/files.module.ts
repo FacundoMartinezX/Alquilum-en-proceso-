@@ -5,9 +5,10 @@ import { FileUploadController } from './files.controller';
 import { FileUploadRepository } from './files.repository';
 import { FileUploadService } from './files.service';
 import { CloudinaryProvider } from 'src/config/cloudinary';
+import { User } from 'src/users/entities/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SpaceWork])],
+  imports: [TypeOrmModule.forFeature([SpaceWork, User])],
   controllers: [FileUploadController],
   providers: [FileUploadService, FileUploadRepository, CloudinaryProvider],
 })
